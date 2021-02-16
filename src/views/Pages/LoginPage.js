@@ -1,6 +1,8 @@
-import React, {useEffect}from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import Axios from 'axios'
+import Axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
+import { useHistory } from 'react-router';
 
 // react-bootstrap components
 import {
@@ -14,20 +16,28 @@ import {
 	Col,
 } from 'react-bootstrap';
 
-
- 
-
-
-  
-
 function LoginPage() {
+	let history = useHistory();
+	const { addToast } = useToasts();
 	const { register, handleSubmit, watch, errors } = useForm();
-  const [cardClasses, setCardClasses] = React.useState('card-hidden');
+	const [cardClasses, setCardClasses] = React.useState('card-hidden');
 
 	const onSubmit = async (data) => {
-    const res = await Axios.post('http://3.12.23.25:9098/auth/login', data)
-    console.log(res) 
-  };
+		const res = await Axios.post('http://3.12.23.25:9098/auth/login', data);
+		console.log('onSubmit -> res', res.data);
+		if (!res.data)
+			addToast('Something went wrong', {
+				appearance: 'error',
+				autoDismiss: true,
+			});
+		else {
+			addToast('Logged in sucessfully', {
+				appearance: 'success',
+				autoDismiss: true,
+			});
+			history.push('/admin/dashboard');
+		}
+	};
 
 	React.useEffect(() => {
 		setTimeout(function () {

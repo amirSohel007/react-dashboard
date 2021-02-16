@@ -519,3 +519,9 @@
 .section-images {
     padding-bottom: 0;
 }
+
+
+/* For toster */
+.react-toast-notifications__container {
+    z-index: 999999;
+}

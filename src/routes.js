@@ -64,6 +64,7 @@ var routes = [
     ],
   },
   {
+    // collapse: true, TODO: add child views
     path: "/administration",
     name: "Administration",
     state: "openAdministration",
@@ -78,6 +79,7 @@ var routes = [
     // ],
   },
   {
+    // collapse: true, TODO : add child views
     path: "/accounts",
     name: "Accounts",
     state: "openAccounts",

@@ -39,10 +39,10 @@ export const POIs = () => {
           <Col md="12">
             <Card className="card-plain table-plain-bg">
               <Card.Header>
-                <Card.Title as="h4">Table on Plain Background</Card.Title>
-                <p className="card-category">
+                <Card.Title as="h4">POIs</Card.Title>
+                {/* <p className="card-category">
                   Here is a subtitle for this table
-                </p>
+                </p> */}
               </Card.Header>
               <Card.Body className="table-full-width">
                 <Table>

@@ -25,7 +25,7 @@ function AuthNavbar() {
         <Container>
           <div className="navbar-wrapper">
             <Navbar.Brand href="#pablo" onClick={(e) => e.preventDefault()}>
-              <span className="d-none d-md-block">Light Bootstrap Dashboard Pro React</span>
+              <span className="d-none d-md-block">Ecosense Enviro</span>
               <span className="d-block d-md-none">LBDP React</span>
             </Navbar.Brand>
           </div>
@@ -40,12 +40,12 @@ function AuthNavbar() {
           </button>
           <Navbar.Collapse className="justify-content-end" in={collapseOpen}>
             <Nav navbar>
-              <Nav.Item className="mr-1">
+              {/* <Nav.Item className="mr-1">
                 <Nav.Link to="/admin/dashboard" as={Link}>
                   <i className="nc-icon nc-chart-pie-35"></i>
                   Dashboard
                 </Nav.Link>
-              </Nav.Item>
+              </Nav.Item> */}
               <Nav.Item
                 className={
                   location.pathname === "/auth/register-page"
@@ -70,7 +70,7 @@ function AuthNavbar() {
                   Login
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Item
+              {/* <Nav.Item
                 className={
                   location.pathname === "/auth/lock-screen-page"
                     ? "active mr-1"
@@ -81,7 +81,7 @@ function AuthNavbar() {
                   <i className="nc-icon nc-key-25"></i>
                   Lock
                 </Nav.Link>
-              </Nav.Item>
+              </Nav.Item> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

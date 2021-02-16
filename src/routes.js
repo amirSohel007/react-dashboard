@@ -39,15 +39,7 @@ import LoginPage from "views/Pages/LoginPage.js";
 import RegisterPage from "views/Pages/RegisterPage.js";
 import LockScreenPage from "views/Pages/LockScreenPage.js";
 
-
 var routes = [
-  {
-    path: "/",
-    layout: "/basic",
-    name: "Login",
-    icon: "nc-icon nc-chart-pie-35",
-    component: LoginPage,
-  },
   {
     path: "/dashboard",
     layout: "/admin",

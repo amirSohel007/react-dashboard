@@ -44,7 +44,7 @@ function Auth() {
         <AuthNavbar />
         {/* End Navbar */}
         <Switch>{getRoutes(routes)}</Switch>
-        <AuthFooter />
+        {/* <AuthFooter /> */}
       </div>
       <FixedPlugin />
     </>

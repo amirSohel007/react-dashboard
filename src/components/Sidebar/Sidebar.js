@@ -4,19 +4,8 @@ import PropTypes from "prop-types";
 
 // react-bootstrap components
 import {
-  Badge,
-  Button,
-  ButtonGroup,
-  Card,
   Collapse,
-  Form,
-  InputGroup,
-  Navbar,
   Nav,
-  Pagination,
-  Container,
-  Row,
-  Col,
 } from "react-bootstrap";
 
 function Sidebar({ routes, image, background }) {
@@ -64,6 +53,10 @@ function Sidebar({ routes, image, background }) {
       if (prop.redirect) {
         return null;
       }
+
+      if (prop.name === "Pages") {
+        return null;
+      }
       if (prop.collapse) {
         var st = {};
         st[prop["state"]] = !state[prop.state];
@@ -101,7 +94,7 @@ function Sidebar({ routes, image, background }) {
           key={key}
           as="li"
         >
-          {/* <Nav.Link to={prop.layout + prop.path} as={Link}>
+          <Nav.Link to={prop.layout + prop.path} as={Link}>
             {prop.icon ? (
               <>
                 <i className={prop.icon} />
@@ -113,7 +106,7 @@ function Sidebar({ routes, image, background }) {
                 <span className="sidebar-normal">{prop.name}</span>
               </>
             )}
-          </Nav.Link> */}
+          </Nav.Link>
         </Nav.Item>
       );
     });
@@ -205,7 +198,7 @@ function Sidebar({ routes, image, background }) {
               </Collapse>
             </div>
           </div>
-          {/* <Nav as="ul">{createLinks(routes)}</Nav> */}
+          <Nav as="ul">{createLinks(routes)}</Nav>
         </div>
         <div
           className="sidebar-background"

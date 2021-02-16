@@ -36,6 +36,8 @@ function LoginPage() {
 				autoDismiss: true,
 			});
 			history.push('/admin/dashboard');
+			const { access_token } = res.data;
+			localStorage.setItem("token", access_token);
 		}
 	};
 

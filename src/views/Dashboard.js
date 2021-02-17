@@ -1,58 +1,52 @@
-import React from "react";
-// react component used to create charts
-import ChartistGraph from "react-chartist";
-// react components used to create a SVG / Vector map
-import { VectorMap } from "react-jvectormap";
-
+import React, { useEffect, useState } from 'react';
 // react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Form,
-  InputGroup,
-  Navbar,
-  Nav,
-  OverlayTrigger,
-  Table,
-  Tooltip,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import { axios_auth } from '../api';
 
 function Dashboard() {
-  return (
-    <>
-      <Container fluid>
-        <Row>
-          <Col lg="3" sm="6">
-            <Card className="card-stats">
-              <Card.Body>
-                <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-chart text-warning"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Number</p>
-                      <Card.Title as="h4">150GB</Card.Title>
-                    </div>
-                  </Col>
-                </Row>
-              </Card.Body>
-              <Card.Footer>
-                <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  Update Now
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col lg="3" sm="6">
+	const [count, setCount] = useState();
+	// GET ALL POIS COUNT
+	const getPoisCountHandler = async () => {
+		const res = await axios_auth.get('/services/services/api/ese-pois/count');
+		if (res.data) {
+      setCount(res.data);
+		}
+	};
+	useEffect(() => {
+		getPoisCountHandler();
+	}, []);
+
+	return (
+		<>
+			<Container fluid>
+				<Row>
+					<Col lg='3' sm='6'>
+						<Card className='card-stats'>
+							<Card.Body>
+								<Row>
+									<Col xs='5'>
+										<div className='icon-big text-center icon-warning'>
+											<i className='nc-icon nc-chart text-warning'></i>
+										</div>
+									</Col>
+									<Col xs='7'>
+										<div className='numbers'>
+											<p className='card-category'>POIs Number</p>
+											<Card.Title as='h4'>{count}</Card.Title>
+										</div>
+									</Col>
+								</Row>
+							</Card.Body>
+							<Card.Footer>
+								<hr></hr>
+								<div className='stats'>
+									<i className='fas fa-redo mr-1'></i>
+									Update Now
+								</div>
+							</Card.Footer>
+						</Card>
+					</Col>
+					{/* <Col lg="3" sm="6">
             <Card className="card-stats">
               <Card.Body>
                 <Row>
@@ -77,8 +71,8 @@ function Dashboard() {
                 </div>
               </Card.Footer>
             </Card>
-          </Col>
-          <Col lg="3" sm="6">
+          </Col> */}
+					{/* <Col lg="3" sm="6">
             <Card className="card-stats">
               <Card.Body>
                 <Row>
@@ -103,8 +97,8 @@ function Dashboard() {
                 </div>
               </Card.Footer>
             </Card>
-          </Col>
-          <Col lg="3" sm="6">
+          </Col> */}
+					{/* <Col lg="3" sm="6">
             <Card className="card-stats">
               <Card.Body>
                 <Row>
@@ -129,9 +123,9 @@ function Dashboard() {
                 </div>
               </Card.Footer>
             </Card>
-          </Col>
-        </Row>
-        <Row>
+          </Col> */}
+				</Row>
+				{/* <Row>
           <Col md="12">
             <Card>
               <Card.Header>
@@ -270,8 +264,8 @@ function Dashboard() {
               </Card.Body>
             </Card>
           </Col>
-        </Row>
-        <Row>
+        </Row> */}
+				{/* <Row>
           <Col md="4">
             <Card>
               <Card.Header>
@@ -375,8 +369,8 @@ function Dashboard() {
               </Card.Footer>
             </Card>
           </Col>
-        </Row>
-        <Row>
+        </Row> */}
+				{/* <Row>
           <Col md="6">
             <Card>
               <Card.Header>
@@ -784,10 +778,10 @@ function Dashboard() {
               </Card.Footer>
             </Card>
           </Col>
-        </Row>
-      </Container>
-    </>
-  );
+        </Row> */}
+			</Container>
+		</>
+	);
 }
 
 export default Dashboard;

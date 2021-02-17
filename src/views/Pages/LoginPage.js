@@ -5,7 +5,7 @@ import { useToasts } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
 import { no_auth_axios } from '../../api';
 import { connect } from 'react-redux';
-import { login } from '../../actions/login'
+import { login } from '../../store/actions/login'
 // react-bootstrap components
 import {
 	Badge,
@@ -23,11 +23,11 @@ function LoginPage(props) {
 	const { addToast } = useToasts();
 	const { register, handleSubmit, watch, errors } = useForm();
 	const [cardClasses, setCardClasses] = React.useState('card-hidden');
-
 	const { isLoggedIn } = props.loginState;
 
 	useEffect( () => {
 		console.log("isLoggedIn", isLoggedIn)
+
 		if(isLoggedIn) {
 			addToast('Logged in sucessfully', {
 				appearance: 'success',

@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { no_auth_axios } from '../api';
-
+import { no_auth_axios } from '../../api';
 import { LOGGING_IN, LOGGED_IN, LOGIN_ERROR } from './actionTypes';
 
 export const login = data => {
@@ -9,6 +8,12 @@ export const login = data => {
         return no_auth_axios
             .post('/auth/login', data)
             .then(response => {
+                if (localStorage.getItem('token')){
+                    dispatch({
+                        type: LOGGED_IN,
+                        constants: response.data,
+                    });
+                }
                 dispatch({
                     type: LOGGED_IN,
                     constants: response.data,

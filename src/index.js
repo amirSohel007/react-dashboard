@@ -26,7 +26,7 @@ import AuthLayout from 'layouts/Auth.js';
 import AdminLayout from 'layouts/Admin.js';
 import { ToastProvider } from 'react-toast-notifications';
 import { Provider } from 'react-redux';
-import store from './store';
+import store from './store/store';
 
 ReactDOM.render(
 	<Provider store={store}>

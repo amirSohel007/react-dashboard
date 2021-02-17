@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axios_auth } from '../../api';
-// import Table from '../../components/ReactTable/ReactTable'
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact } from 'ag-grid-react';
 import Select from 'react-select';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -20,16 +19,23 @@ export const POIs = () => {
 			setUsers(usersList);
 		}
   };
-  
 
-	const fetchPoisData = async () => {
-		const res = await axios_auth.get('/services/services/api/ese-pois');
+	const fetchPoisData = async (params = null) => {
+    let url = '/services/services/api/ese-pois';
+    if (params) url += `?${params}`;
+		const res = await axios_auth.get(url);
 		if (res.data) {
 			setPoisData(res.data);
 		} else {
 			alert('Error fetching data');
 		}
 	};
+
+  const fetchUserSpecificPois = (user) => {
+    setSingleSelect(user);
+    let params = `createdBy.equals=${user.value}`
+    fetchPoisData(params);
+  }
 
 	useEffect(() => {
     fetchPoisData();
@@ -159,7 +165,7 @@ export const POIs = () => {
 									classNamePrefix='react-select'
 									name='singleSelect'
 									value={singleSelect}
-									onChange={(value) => setSingleSelect(value)}
+									onChange={(value) => fetchUserSpecificPois(value)}
 									options={users}
 									placeholder='Single Select'
 								/>

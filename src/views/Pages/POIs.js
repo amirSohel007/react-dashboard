@@ -5,6 +5,19 @@ import Select from 'react-select';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
+import {
+  Badge,
+  Button,
+  Card,
+  Form,
+  InputGroup,
+  Navbar,
+  Nav,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
+
 export const POIs = () => {
   const [poisData, setPoisData] = useState();
   const [singleSelect, setSingleSelect] = React.useState('');
@@ -159,8 +172,10 @@ export const POIs = () => {
 	];
 
 	return (
-    <React.Fragment>
-      <Select
+    <div className="d-flex flex-column" style={{height: 'calc(100vh - 185px)'}}>
+     <Row>
+       <Col className="co-sm-6">
+       <Select
 									className='react-select primary'
 									classNamePrefix='react-select'
 									name='singleSelect'
@@ -169,10 +184,16 @@ export const POIs = () => {
 									options={users}
 									placeholder='Single Select'
 								/>
-      	<div className='ag-theme-alpine' style={{ height: '100vh', width: '100%' }}>
+       </Col>
+
+       <Col className="co-sm-6">
+        next dropdown here
+       </Col>
+     </Row>
+      	<div className='ag-theme-alpine' style={{ flex:'auto', width: '100%' }}>
 			<AgGridReact columnDefs={columnDefs} rowData={poisData}></AgGridReact>
 		</div>
-    </React.Fragment>
+    </div>
 	
 	);
 };

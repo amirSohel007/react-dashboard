@@ -522,5 +522,9 @@
 
 /* For toster */
 .react-toast-notifications__container {
-	z-index: 999999 !important;
+    z-index: 999999 !important;
+}
+
+body {
+    overflow-x: hidden;
 }

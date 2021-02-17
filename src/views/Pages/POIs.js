@@ -1,199 +1,163 @@
 import React, { useEffect, useState } from 'react';
 import { axios_auth } from '../../api';
-import Select from 'react-select';
-import {
-	Badge,
-	Button,
-	Card,
-	Form,
-	InputGroup,
-	Navbar,
-	Nav,
-	Table,
-	OverlayTrigger,
-	Tooltip,
-	Container,
-	Row,
-	Col,
-} from 'react-bootstrap';
+// import Table from '../../components/ReactTable/ReactTable'
+import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+
 export const POIs = () => {
-	const [singleSelect, setSingleSelect] = React.useState('');
-	const [poisData, setPoisData] = useState();
-	const [users, setUsers] = useState([]);
+  const [poisData, setPoisData] = useState();
+  const fetchPoisData = async () => {
+    const res = await axios_auth.get('/services/services/api/ese-pois');
+    if (res.data) {
+      setPoisData(res.data);
+    }
+    else {
+      alert("Error fetching data");
+    }
+  };
 
-  // GET POIs Users
-	const getUsers = async () => {
-		const res = await axios_auth.get('/services/services/api/users');
-		if (res.data) {
-			let usersList = [];
-			res.data.map((user) => usersList.push({value:user.login, label:user.login}));
-			setUsers(usersList);
-		}
-	};
+  useEffect(() => {
+    fetchPoisData();
+  }, []);
 
-	// FETCH POIS DATA
-	const fetchPoisData = async () => {
-		const res = await axios_auth.get('/services/services/api/ese-pois');
-		if (res.data) {
-			setPoisData(res.data);
-		} else {
-			alert('Error fetching data');
-		}
-	};
+  const action = (e) => {
+    console.log("action executed", e);
+  }
 
-	useEffect(() => {
-		fetchPoisData();
-		getUsers();
-	}, []);
+  const columnDefs = [
+      {
+        headerName: "ID",
+        field: "id",
+        width: "100px",
+        sortable: true
+      },
+      {
+        headerName: "Holding Number",
+        field: "holdingNo",
+        width: "180px",
+        sortable: true
+      },
+      {
+        headerName: "Plot No",
+        field: "plotNo",
+        width: "180px",
+        sortable: true
+      },
+      {
+        headerName: "Ward",
+        field: "eseWardWardDesc",
+        sortable: true
+      },
+      {
+        headerName: "Guardian Name",
+        field: "guardianName",
+        sortable: true
+      },
+      {
+        headerName: "Address 1",
+        field: "address1",
+        sortable: true
+      },
+      {
+        headerName: "Address 2",
+        field: "address2",
+        sortable: true
+      },
+      {
+        headerName: "Address 3",
+        field: "address3",
+        sortable: true
+      },
+      {
+        headerName: "Mobile",
+        field: "mobileNo",
+        sortable: true
+      },
+      {
+        headerName: "Owner name",
+        field: "ownerName",
+        sortable: true
+      },
+      {
+        headerName: "Landmark",
+        field: "landMark",
+        sortable: true
+      },
+      {
+        headerName: "Latitude",
+        field: "latitude",
+        sortable: true
+      },
+      {
+        headerName: "Longitude",
+        field: "longitude",
+        sortable: true
+      },
+      {
+        headerName: "QR Code",
+        field: "qrCode",
+        sortable: true
+      },
+      {
+        headerName: "RFID Code",
+        field: "rfidCode",
+        sortable: true
+      },
+      {
+        headerName: "Additional details",
+        field: "additionalDetails",
+        sortable: true
+      },
+      {
+        headerName: "Email",
+        field: "email",
+        sortable: true
+      },
+      {
+        headerName: "Reason for follow up",
+        field: "reasonForFollowUp",
+        sortable: true
+      },
+      {
+        headerName: "Notes",
+        field: "notes",
+        sortable: true
+      },
+      {
+        headerName: "Pin code",
+        field: "esePinCodePinCode",
+        sortable: true
+      },
+      {
+        headerName: "POI Type",
+        field: "esePoiTypePoiTypeName",
+        sortable: true
+      },
+      {
+        headerName: "Property usage type",
+        field: "esePoiPropertyUsageTypePropertyUsageTypeName",
+        sortable: true
+      },
+      {
+        headerName: "Actions",
+        cellRendererFramework: function(params) {
+          return <span>
+                  <i className="fa fa-eye pr-4" onClick={() => action(params.data) }></i>
+                  <i className="fa fa-pen pr-4" onClick={() => action("edit") }></i>
+                  <i className="fa fa-trash pr-4" onClick={() => action("delete") }></i>
+                </span>
+        }
+      }
+    ]
+  
 
-	return (
-		<div>
-			<Container fluid>
-				<Row>
-					<Col md='12'>
-						<Card className='card-plain table-plain-bg'>
-							<Card.Header>
-								<Card.Title as='h4'>POIs</Card.Title>
-							</Card.Header>
-							<Card.Body className='table-full-width'>
-								<Select
-									className='react-select primary'
-									classNamePrefix='react-select'
-									name='singleSelect'
-									value={singleSelect}
-									onChange={(value) => setSingleSelect(value)}
-									options={users}
-									placeholder='Single Select'
-								/>
-
-								<div className='table-responsive'>
-									<Table>
-										<thead>
-											<tr>
-												<th>ID</th>
-												<th>Holding No</th>
-												<th>Plot No</th>
-												<th>Owner Name</th>
-												<th>Guardian Name</th>
-												<th>Mobile No</th>
-												<th>Address 1</th>
-												<th>Address 2</th>
-												<th>Address 3</th>
-												<th>Ward</th>
-												<th>Landmark</th>
-												<th>Latitude</th>
-												<th>Longitude</th>
-												<th>QR Code</th>
-												<th>RFID Code</th>
-												<th>Additional Detail</th>
-												<th>Email</th>
-												<th>Reason for followup</th>
-												<th>Notes</th>
-												<th>Pin Code</th>
-												<th>POI Type</th>
-												<th>POI Property</th>
-												<th className='text-right'>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											{poisData &&
-												poisData.length > 0 &&
-												poisData.map((poi, index) => {
-													return (
-														<tr>
-															<td>{poi.id}</td>
-															<td>{poi.holdingNo}</td>
-															<td>{poi.plotNo}</td>
-															<td>{poi.ownerName}</td>
-															<td>{poi.guardianName}</td>
-															<td>{poi.mobileNo}</td>
-															<td>{poi.address1}</td>
-															<td>{poi.address2}</td>
-															<td>{poi.address3}</td>
-															<td>{poi.eseWardWardDesc}</td>
-															<td>{poi.landMark}</td>
-															<td>{poi.latitude}</td>
-															<td>{poi.longitude}</td>
-															<td>{poi.qrCode}</td>
-															<td>{poi.rfidCode}</td>
-															<td>{poi.additionalDetails}</td>
-															<td>{poi.email}</td>
-															<td>{poi.reasonForFollowUp}</td>
-															<td>{poi.notes}</td>
-															<td>{poi.esePinCodePinCode}</td>
-															<td>{poi.esePoiTypePoiTypeName}</td>
-															<td>
-																{
-																	poi.esePoiPropertyUsageTypePropertyUsageTypeName
-																}
-															</td>
-															<td className='td-actions text-right'>
-																<OverlayTrigger
-																	href='#pablo'
-																	onClick={(e) => e.preventDefault()}
-																	overlay={
-																		<Tooltip id='tooltip-48903503'>
-																			View Profile..
-																		</Tooltip>
-																	}
-																>
-																	<Button
-																		className='btn-link btn-xs'
-																		href='#pablo'
-																		onClick={(e) => e.preventDefault()}
-																		variant='info'
-																	>
-																		<i className='fas fa-user'></i>
-																	</Button>
-																</OverlayTrigger>
-																<OverlayTrigger
-																	href='#pablo'
-																	onClick={(e) => e.preventDefault()}
-																	overlay={
-																		<Tooltip id='tooltip-981231696'>
-																			Edit Profile..
-																		</Tooltip>
-																	}
-																>
-																	<Button
-																		className='btn-link btn-xs'
-																		href='#pablo'
-																		onClick={(e) => e.preventDefault()}
-																		variant='success'
-																	>
-																		<i className='fas fa-edit'></i>
-																	</Button>
-																</OverlayTrigger>
-																<OverlayTrigger
-																	href='#pablo'
-																	onClick={(e) => e.preventDefault()}
-																	overlay={
-																		<Tooltip id='tooltip-255158527'>
-																			Remove..
-																		</Tooltip>
-																	}
-																>
-																	<Button
-																		className='btn-link btn-xs'
-																		href='#pablo'
-																		onClick={(e) => e.preventDefault()}
-																		variant='danger'
-																	>
-																		<i className='fas fa-times'></i>
-																	</Button>
-																</OverlayTrigger>
-															</td>
-														</tr>
-													);
-												})}
-										</tbody>
-									</Table>
-								</div>
-							</Card.Body>
-						</Card>
-					</Col>
-				</Row>
-			</Container>
-		</div>
-	);
+  return (
+    <div className="ag-theme-alpine" style={{ height: '100vh', width: '100%' }}>
+      <AgGridReact columnDefs={columnDefs}
+        rowData={poisData}>
+      </AgGridReact>
+    </div>
+  )
 };

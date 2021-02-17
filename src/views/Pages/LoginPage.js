@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
-
+import { no_auth_axios } from '../../api';
+import { connect } from 'react-redux';
+import { login } from '../../store/actions/login'
 // react-bootstrap components
 import {
 	Badge,
@@ -16,30 +18,49 @@ import {
 	Col,
 } from 'react-bootstrap';
 
-function LoginPage() {
+function LoginPage(props) {
 	let history = useHistory();
 	const { addToast } = useToasts();
 	const { register, handleSubmit, watch, errors } = useForm();
 	const [cardClasses, setCardClasses] = React.useState('card-hidden');
+	const { isLoggedIn } = props.loginState;
 
-	const onSubmit = async (data) => {
-		const res = await Axios.post('http://3.12.23.25:9098/auth/login', data);
-		console.log('onSubmit -> res', res.data);
-		if (!res.data)
-			addToast('Something went wrong', {
-				appearance: 'error',
-				autoDismiss: true,
-			});
-		else {
+	useEffect( () => {
+		console.log("isLoggedIn", isLoggedIn)
+
+		if(isLoggedIn) {
 			addToast('Logged in sucessfully', {
 				appearance: 'success',
 				autoDismiss: true,
 			});
-			history.push('/admin/dashboard');
-			const { access_token } = res.data;
-			localStorage.setItem("token", access_token);
-		}
-	};
+			history.push('/admin/home');
+		}	
+	}, [isLoggedIn])
+
+
+	// Login Method handle
+	// const onSubmit = async (data) => {
+	// 	await no_auth_axios
+	// 		.post('/auth/login', data)
+	// 		.then((res) => {
+	// 			if (res.data) {
+	// 				// addToast('Logged in sucessfully', {
+	// 				// 	appearance: 'success',
+	// 				// 	autoDismiss: true,
+	// 				// });
+	// 				// history.push('/admin/home');
+	// 				const { access_token } = res.data;
+	// 				localStorage.setItem('token', access_token);
+	// 			}
+	// 			res.data;
+	// 		})
+	// 		.catch((err) => {
+	// 			addToast(err?.message, {
+	// 				appearance: 'error',
+	// 				autoDismiss: true,
+	// 			});
+	// 		});
+	// };
 
 	React.useEffect(() => {
 		setTimeout(function () {
@@ -59,7 +80,7 @@ function LoginPage() {
 							<Form
 								action=''
 								className='form'
-								onSubmit={handleSubmit(onSubmit)}
+								onSubmit={handleSubmit(props.login)}
 							>
 								<Card className={'card-login ' + cardClasses}>
 									<Card.Header>
@@ -119,4 +140,20 @@ function LoginPage() {
 	);
 }
 
-export default LoginPage;
+const mapStateToProps = (state) => {
+	return {
+		loginState: state.login
+	};
+};
+  
+  
+const mapDispatchToProps = (dispatch) => {
+	return {
+		login: data => dispatch(login(data)),
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(LoginPage);

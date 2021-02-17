@@ -45,9 +45,9 @@ function AdminNavbar() {
                 <i className="fas fa-bars visible-on-sidebar-mini"></i>
               </Button>
             </div>
-            <Navbar.Brand href="#pablo" onClick={(e) => e.preventDefault()}>
+            {/* <Navbar.Brand href="#pablo" onClick={(e) => e.preventDefault()}>
               Buttons
-            </Navbar.Brand>
+            </Navbar.Brand> */}
           </div>
           <button
             className="navbar-toggler navbar-toggler-right border-0"

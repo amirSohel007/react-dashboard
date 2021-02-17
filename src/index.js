@@ -25,16 +25,20 @@ import 'assets/css/demo.css';
 import AuthLayout from 'layouts/Auth.js';
 import AdminLayout from 'layouts/Admin.js';
 import { ToastProvider } from 'react-toast-notifications';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 ReactDOM.render(
-	<BrowserRouter>
-		<Switch>
-			<ToastProvider>
-				<Route path='/auth' render={(props) => <AuthLayout {...props} />} />
-				<Route path='/admin' render={(props) => <AdminLayout {...props} />} />
-				<Redirect from='/' to='/auth/login-page' />
-			</ToastProvider>
-		</Switch>
-	</BrowserRouter>,
+	<Provider store={store}>
+		<BrowserRouter>
+			<Switch>
+				<ToastProvider>
+					<Route path='/auth' render={(props) => <AuthLayout {...props} />} />
+					<Route path='/admin' render={(props) => <AdminLayout {...props} />} />
+					<Redirect from='/' to='/auth/login-page' />
+				</ToastProvider>
+			</Switch>
+		</BrowserRouter>
+	</Provider>,	
 	document.getElementById('root')
 );

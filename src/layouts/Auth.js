@@ -1,22 +1,11 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-// react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Container,
-  Col,
-} from "react-bootstrap";
-
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
-import AuthFooter from "components/Footers/AuthFooter.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
-
+import AuthNavbar from "components/Navbars/AuthNavbar.js";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 // dinamically create auth routes
 import routes from "routes.js";
+
+
 
 function Auth() {
   const getRoutes = (routes) => {

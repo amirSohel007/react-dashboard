@@ -7,35 +7,9 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 export const POIs = () => {
-
-	const [gridApi, setGridApi] = useState(null);
-    const [gridColumnApi, setGridColumnApi] = useState(null);
-
-    const [rowData, setRowData] = useState([
-        { make: "Toyota", model: "Celica", price: 35000 },
-		{ make: "Ford", model: "Mondeo", price: 32000 },
-		{ make: "Ford", model: "Mondeo", price: 32000 },
-		{ make: "Ford", model: "Mondeo", price: 32000 }, 
-		{ make: "Ford", model: "Mondeo", price: 32000 }, 
-		{ make: "Ford", model: "Mondeo", price: 32000 },
-		{ make: "Porsche", model: "Boxter", price: 72000 },
-		{ make: "Toyota", model: "Celica", price: 35000 },
-		{ make: "Ford", model: "Mondeo", price: 32000 },
-		{ make: "Ford", model: "Mondeo", price: 32000 },
-		{ make: "Ford", model: "Mondeo", price: 32000 }, 
-		{ make: "Ford", model: "Mondeo", price: 32000 }, 
-		{ make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxter", price: 72000 }
-    ]);
-
-
-
-
-
   const [poisData, setPoisData] = useState();
   const fetchPoisData = async () => {
     const res = await axios_auth.get('/services/services/api/ese-pois');
-    console.log('fetchPoisData -> res', res.data);
     if (res.data) {
       setPoisData(res.data);
     }
@@ -48,113 +22,120 @@ export const POIs = () => {
     fetchPoisData();
   }, []);
 
-  return (
-    // poisData && poisData.length > 0 ? <Table columns={[
-    //   {
-    //     Header: "ID",
-    //     accessor: "id"
-    //   },
-    //   {
-    //     Header: "Holding number",
-    //     accessor: "holdingNo"
-    //   },
-    //   {
-    //     Header: "plotNo",
-    //     accessor: "plotNo"
-    //   },
-    //   {
-    //     Header: "eseWardWardDesc",
-    //     accessor: "eseWardWardDesc"
-    //   },
-    //   {
-    //     Header: "guardianName",
-    //     accessor: "guardianName"
-    //   },
-    //   {
-    //     Header: "address1",
-    //     accessor: "address1"
-    //   },
-    //   {
-    //     Header: "address2",
-    //     accessor: "address2"
-    //   },
-    //   {
-    //     Header: "Mobile",
-    //     accessor: "mobileNo"
-    //   },
-    //   {
-    //     Header: "Owner name",
-    //     accessor: "ownerName"
-    //   },
-    //   {
-    //     Header: "landMark",
-    //     accessor: "landMark"
-    //   },
-    //   {
-    //     Header: "latitude",
-    //     accessor: "latitude"
-    //   },
-    //   {
-    //     Header: "longitude",
-    //     accessor: "longitude"
-    //   },
-    //   {
-    //     Header: "qrCode",
-    //     accessor: "qrCode"
-    //   },
-    //   {
-    //     Header: "rfidCode",
-    //     accessor: "rfidCode"
-    //   },
-    //   {
-    //     Header: "additionalDetails",
-    //     accessor: "additionalDetails"
-    //   },
-    //   {
-    //     Header: "email",
-    //     accessor: "email"
-    //   },
-    //   {
-    //     Header: "reasonForFollowUp",
-    //     accessor: "reasonForFollowUp"
-    //   },
-    //   {
-    //     Header: "notes",
-    //     accessor: "notes"
-    //   },
-    //   {
-    //     Header: "esePinCodePinCode",
-    //     accessor: "esePinCodePinCode"
-    //   },
-    //   {
-    //     Header: "esePoiTypePoiTypeName",
-    //     accessor: "esePoiTypePoiTypeName"
-    //   },
-    //   {
-    //     Header: "esePoiPropertyUsageTypePropertyUsageTypeName",
-    //     accessor: "esePoiPropertyUsageTypePropertyUsageTypeName"
-    //   }
-    // ]}
+  const action = (e) => {
+    console.log("action executed", e);
+  }
 
-    //   data={poisData}
-	// /> : <div></div>
-	
-	 <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
-            <AgGridReact
-                rowData={rowData}>
-                <AgGridColumn field="make"></AgGridColumn>
-                <AgGridColumn field="model"></AgGridColumn>
-                <AgGridColumn field="price"></AgGridColumn>
-				<AgGridColumn field="make"></AgGridColumn>
-                <AgGridColumn field="model"></AgGridColumn>
-                <AgGridColumn field="price"></AgGridColumn>
-				<AgGridColumn field="make"></AgGridColumn>
-                <AgGridColumn field="model"></AgGridColumn>
-                <AgGridColumn field="price"></AgGridColumn>
-				<AgGridColumn field="make"></AgGridColumn>
-                <AgGridColumn field="model"></AgGridColumn>
-                <AgGridColumn field="price"></AgGridColumn>
-            </AgGridReact>
-        </div>
+  const columnDefs = [
+      {
+        headerName: "ID",
+        field: "id",
+        width: "100px"
+      },
+      {
+        headerName: "Holding Number",
+        field: "holdingNo",
+        width: "180px"
+      },
+      {
+        headerName: "Plot No",
+        field: "plotNo",
+        width: "180px"
+      },
+      {
+        headerName: "Ward",
+        field: "eseWardWardDesc"
+      },
+      {
+        headerName: "Guardian Name",
+        field: "guardianName"
+      },
+      {
+        headerName: "Address 1",
+        field: "address1"
+      },
+      {
+        headerName: "Address 2",
+        field: "address2"
+      },
+      {
+        headerName: "Address 3",
+        field: "address3"
+      },
+      {
+        headerName: "Mobile",
+        field: "mobileNo"
+      },
+      {
+        headerName: "Owner name",
+        field: "ownerName"
+      },
+      {
+        headerName: "Landmark",
+        field: "landMark"
+      },
+      {
+        headerName: "Latitude",
+        field: "latitude"
+      },
+      {
+        headerName: "Longitude",
+        field: "longitude"
+      },
+      {
+        headerName: "QR Code",
+        field: "qrCode"
+      },
+      {
+        headerName: "RFID Code",
+        field: "rfidCode"
+      },
+      {
+        headerName: "Additional details",
+        field: "additionalDetails"
+      },
+      {
+        headerName: "Email",
+        field: "email"
+      },
+      {
+        headerName: "Reason for follow up",
+        field: "reasonForFollowUp"
+      },
+      {
+        headerName: "Notes",
+        field: "notes"
+      },
+      {
+        headerName: "Pin code",
+        field: "esePinCodePinCode"
+      },
+      {
+        headerName: "POI Type",
+        field: "esePoiTypePoiTypeName"
+      },
+      {
+        headerName: "Property usage type",
+        field: "esePoiPropertyUsageTypePropertyUsageTypeName"
+      },
+      {
+        headerName: "Actions",
+        cellRendererFramework: function(params) {
+          return <span>
+                  <i className="fa fa-eye pr-4" onClick={() => action(params.data) }></i>
+                  <i className="fa fa-pen pr-4" onClick={() => action("edit") }></i>
+                  <i className="fa fa-trash pr-4" onClick={() => action("delete") }></i>
+                </span>
+        }
+      }
+    ]
+  
+
+  return (
+    <div className="ag-theme-alpine" style={{ height: '100vh', width: '100%' }}>
+      <AgGridReact columnDefs={columnDefs}
+        rowData={poisData}>
+      </AgGridReact>
+    </div>
   )
 };

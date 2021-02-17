@@ -525,3 +525,7 @@
 .react-toast-notifications__container {
     z-index: 999999;
 }
+
+body {
+    overflow-x: hidden;
+}

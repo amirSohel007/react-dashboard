@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
-
+import { no_auth_axios } from '../../api';
 // react-bootstrap components
 import {
 	Badge,
@@ -22,22 +22,28 @@ function LoginPage() {
 	const { register, handleSubmit, watch, errors } = useForm();
 	const [cardClasses, setCardClasses] = React.useState('card-hidden');
 
+	// Login Method handle
 	const onSubmit = async (data) => {
-		const res = await Axios.post('http://3.12.23.25:9098/auth/login', data);
-		if (!res.data)
-			addToast('Something went wrong', {
-				appearance: 'error',
-				autoDismiss: true,
+		await no_auth_axios
+			.post('/auth/login', data)
+			.then((res) => {
+				if (res.data) {
+					addToast('Logged in sucessfully', {
+						appearance: 'success',
+						autoDismiss: true,
+					});
+					history.push('/admin/home');
+					const { access_token } = res.data;
+					localStorage.setItem('token', access_token);
+				}
+				res.data;
+			})
+			.catch((err) => {
+				addToast(err?.message, {
+					appearance: 'error',
+					autoDismiss: true,
+				});
 			});
-		else {
-			addToast('Logged in sucessfully', {
-				appearance: 'success',
-				autoDismiss: true,
-			});
-			history.push('/admin/home');
-			const { access_token } = res.data;
-			localStorage.setItem("token", access_token);
-		}
 	};
 
 	React.useEffect(() => {

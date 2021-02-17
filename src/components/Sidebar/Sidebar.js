@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { Collapse, Nav } from 'react-bootstrap';
 
 function Sidebar({ routes, image, background, username }) {
-	console.log('Sidebar -> username', username);
 	// to check for active links and opened collapses
 	let location = useLocation();
 	// this is for the user collapse

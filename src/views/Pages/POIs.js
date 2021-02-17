@@ -30,93 +30,115 @@ export const POIs = () => {
       {
         headerName: "ID",
         field: "id",
-        width: "100px"
+        width: "100px",
+        sortable: true
       },
       {
         headerName: "Holding Number",
         field: "holdingNo",
-        width: "180px"
+        width: "180px",
+        sortable: true
       },
       {
         headerName: "Plot No",
         field: "plotNo",
-        width: "180px"
+        width: "180px",
+        sortable: true
       },
       {
         headerName: "Ward",
-        field: "eseWardWardDesc"
+        field: "eseWardWardDesc",
+        sortable: true
       },
       {
         headerName: "Guardian Name",
-        field: "guardianName"
+        field: "guardianName",
+        sortable: true
       },
       {
         headerName: "Address 1",
-        field: "address1"
+        field: "address1",
+        sortable: true
       },
       {
         headerName: "Address 2",
-        field: "address2"
+        field: "address2",
+        sortable: true
       },
       {
         headerName: "Address 3",
-        field: "address3"
+        field: "address3",
+        sortable: true
       },
       {
         headerName: "Mobile",
-        field: "mobileNo"
+        field: "mobileNo",
+        sortable: true
       },
       {
         headerName: "Owner name",
-        field: "ownerName"
+        field: "ownerName",
+        sortable: true
       },
       {
         headerName: "Landmark",
-        field: "landMark"
+        field: "landMark",
+        sortable: true
       },
       {
         headerName: "Latitude",
-        field: "latitude"
+        field: "latitude",
+        sortable: true
       },
       {
         headerName: "Longitude",
-        field: "longitude"
+        field: "longitude",
+        sortable: true
       },
       {
         headerName: "QR Code",
-        field: "qrCode"
+        field: "qrCode",
+        sortable: true
       },
       {
         headerName: "RFID Code",
-        field: "rfidCode"
+        field: "rfidCode",
+        sortable: true
       },
       {
         headerName: "Additional details",
-        field: "additionalDetails"
+        field: "additionalDetails",
+        sortable: true
       },
       {
         headerName: "Email",
-        field: "email"
+        field: "email",
+        sortable: true
       },
       {
         headerName: "Reason for follow up",
-        field: "reasonForFollowUp"
+        field: "reasonForFollowUp",
+        sortable: true
       },
       {
         headerName: "Notes",
-        field: "notes"
+        field: "notes",
+        sortable: true
       },
       {
         headerName: "Pin code",
-        field: "esePinCodePinCode"
+        field: "esePinCodePinCode",
+        sortable: true
       },
       {
         headerName: "POI Type",
-        field: "esePoiTypePoiTypeName"
+        field: "esePoiTypePoiTypeName",
+        sortable: true
       },
       {
         headerName: "Property usage type",
-        field: "esePoiPropertyUsageTypePropertyUsageTypeName"
+        field: "esePoiPropertyUsageTypePropertyUsageTypeName",
+        sortable: true
       },
       {
         headerName: "Actions",

@@ -16,7 +16,17 @@ import {
 	Col,
   } from "react-bootstrap";
 export const POIs = () => {
-	const [poisData, setPoisData] = useState();
+  const [poisData, setPoisData] = useState();
+  const [users, setUsers] = useState([])
+
+  const getUsers = async () => {
+    const res = await axios_auth.get('/services/services/api/users')
+    if (res.data){
+        setUsers(res.data)
+    }
+  }
+
+// FETCH POIS DATA
 	const fetchPoisData = async () => {
 		const res = await axios_auth.get('/services/services/api/ese-pois');
 		console.log('fetchPoisData -> res', res.data);
@@ -29,7 +39,8 @@ export const POIs = () => {
 	};
 
 	useEffect(() => {
-		fetchPoisData();
+    fetchPoisData();
+    getUsers()
 	}, []);
 
 	return (
@@ -45,6 +56,9 @@ export const POIs = () => {
                 </p> */}
               </Card.Header>
               <Card.Body className="table-full-width">
+
+
+                <div className="table-responsive">
                 <Table>
                   <thead>
                     <tr>
@@ -159,6 +173,8 @@ export const POIs = () => {
 					  }
                   </tbody>
                 </Table>
+                </div>
+               
               </Card.Body>
             </Card>
           </Col>

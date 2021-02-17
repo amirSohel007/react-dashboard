@@ -44,11 +44,11 @@ function AdminFooter() {
                 </a>
               </li>
             </ul>
-            <p className="copyright text-center">
+            {/* <p className="copyright text-center">
               © <script>document.write(new Date().getFullYear())</script>
               <a href="http://www.creative-tim.com">Creative Tim</a>, made with
               love for a better web
-            </p>
+            </p> */}
           </nav>
         </Container>
       </footer>

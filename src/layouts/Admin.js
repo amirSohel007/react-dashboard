@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import { Switch, Route } from "react-router-dom";
 import Axios from 'axios'
 // react-bootstrap components
@@ -30,10 +30,29 @@ import image1 from "assets/img/full-screen-image-1.jpg";
 import image2 from "assets/img/full-screen-image-2.jpg";
 import image3 from "assets/img/full-screen-image-3.jpg";
 import image4 from "assets/img/full-screen-image-4.jpg";
+import { axios_auth } from "api";
 
 function Admin() {
   const [sidebarImage, setSidebarImage] = React.useState(image3);
   const [sidebarBackground, setSidebarBackground] = React.useState("black");
+  const [user, setUser] = useState()
+
+// To get the user details..
+  const getUserDetails = async () => {
+    const res = await axios_auth.get('/services/services/api/account');
+      if (res.data){
+        const {firstName, email, id} = res.data
+        const user = {
+          firstName,email,id
+        }
+        setUser(user)
+        //Set user details in local Stroge
+        localStorage.setItem('user', JSON.stringify(user))
+      }
+  }
+  useEffect(() => {
+    getUserDetails()
+  }, [])
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
@@ -60,6 +79,7 @@ function Admin() {
           routes={routes}
           image={sidebarImage}
           background={sidebarBackground}
+          username = {user?.firstName}
         />
         <div className="main-panel">
           <AdminNavbar />

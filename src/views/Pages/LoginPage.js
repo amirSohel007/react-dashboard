@@ -24,7 +24,6 @@ function LoginPage() {
 
 	const onSubmit = async (data) => {
 		const res = await Axios.post('http://3.12.23.25:9098/auth/login', data);
-		console.log('onSubmit -> res', res.data);
 		if (!res.data)
 			addToast('Something went wrong', {
 				appearance: 'error',
@@ -35,7 +34,7 @@ function LoginPage() {
 				appearance: 'success',
 				autoDismiss: true,
 			});
-			history.push('/admin/dashboard');
+			history.push('/admin/home');
 			const { access_token } = res.data;
 			localStorage.setItem("token", access_token);
 		}

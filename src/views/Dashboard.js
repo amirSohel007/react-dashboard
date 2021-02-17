@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 // react component used to create charts
 import ChartistGraph from "react-chartist";
 // react components used to create a SVG / Vector map
 import { VectorMap } from "react-jvectormap";
+
+import {axios_auth} from '../api'
 
 // react-bootstrap components
 import {
@@ -22,6 +24,20 @@ import {
 } from "react-bootstrap";
 
 function Dashboard() {
+  const [count, setCount] = useState();
+// GET ALL POIS COUNT
+  const getPoisCount = async () => {
+    const res = await axios_auth.get('/services/services/api/ese-pois/count');
+    if (res.data){
+      setCount(res.data)
+    }
+  }
+
+  useEffect(() => {
+    getPoisCount()
+  }, [])
+
+
   return (
     <>
       <Container fluid>
@@ -37,8 +53,8 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Number</p>
-                      <Card.Title as="h4">150GB</Card.Title>
+                      <p className="card-category">POIs Number</p>
+                      <Card.Title as="h4">{count}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -52,7 +68,7 @@ function Dashboard() {
               </Card.Footer>
             </Card>
           </Col>
-          <Col lg="3" sm="6">
+          {/* <Col lg="3" sm="6">
             <Card className="card-stats">
               <Card.Body>
                 <Row>
@@ -77,8 +93,8 @@ function Dashboard() {
                 </div>
               </Card.Footer>
             </Card>
-          </Col>
-          <Col lg="3" sm="6">
+          </Col> */}
+          {/* <Col lg="3" sm="6">
             <Card className="card-stats">
               <Card.Body>
                 <Row>
@@ -103,8 +119,8 @@ function Dashboard() {
                 </div>
               </Card.Footer>
             </Card>
-          </Col>
-          <Col lg="3" sm="6">
+          </Col> */}
+          {/* <Col lg="3" sm="6">
             <Card className="card-stats">
               <Card.Body>
                 <Row>
@@ -129,9 +145,9 @@ function Dashboard() {
                 </div>
               </Card.Footer>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
-        <Row>
+        {/* <Row>
           <Col md="12">
             <Card>
               <Card.Header>
@@ -270,8 +286,8 @@ function Dashboard() {
               </Card.Body>
             </Card>
           </Col>
-        </Row>
-        <Row>
+        </Row> */}
+        {/* <Row>
           <Col md="4">
             <Card>
               <Card.Header>
@@ -375,8 +391,8 @@ function Dashboard() {
               </Card.Footer>
             </Card>
           </Col>
-        </Row>
-        <Row>
+        </Row> */}
+        {/* <Row>
           <Col md="6">
             <Card>
               <Card.Header>
@@ -784,7 +800,7 @@ function Dashboard() {
               </Card.Footer>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
       </Container>
     </>
   );

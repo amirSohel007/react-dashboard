@@ -9,7 +9,7 @@ function Dashboard() {
 	const getPoisCountHandler = async () => {
 		const res = await axios_auth.get('/services/services/api/ese-pois/count');
 		if (res.data) {
-      setCount(res.data);
+			setCount(res.data);
 		}
 	};
 	useEffect(() => {

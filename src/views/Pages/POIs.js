@@ -1,25 +1,163 @@
 import React, { useEffect, useState } from 'react';
-import { axios_auth } from '../../api';
-import { AgGridReact } from 'ag-grid-react';
-import Select from 'react-select';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-
 import {
-	Row,
-	Col,
+	Col, Row
 } from 'react-bootstrap';
+import DataTable from 'react-data-table-component';
+import Select from 'react-select';
+import { axios_auth } from '../../api';
+
+const poiApiUrl = '/services/services/api/ese-pois'
+const userApiUrl = '/services/services/api/users';
+const wardsApiUrl = '/services/services/api/ese-wards';
+
+
+const columns = [{
+	name: 'ID',
+	selector: 'id',
+	width: '80px',
+	sortable: true,
+},
+{
+	name: 'Holding Number',
+	selector: 'holdingNo',
+	width: '120px',
+	sortable: true,
+},
+{
+	name: 'Plot No',
+	selector: 'plotNo',
+	width: '180px',
+	sortable: true,
+},
+{
+	name: 'Ward',
+	selector: 'eseWardWardDesc',
+	sortable: true,
+},
+{
+	name: 'Guardian Name',
+	selector: 'guardianName',
+	sortable: true,
+},
+{
+	name: 'Address 1',
+	selector: 'address1',
+	sortable: true,
+},
+{
+	name: 'Address 2',
+	selector: 'address2',
+	sortable: true,
+},
+{
+	name: 'Address 3',
+	selector: 'address3',
+	sortable: true,
+},
+{
+	name: 'Mobile',
+	selector: 'mobileNo',
+	sortable: true,
+},
+{
+	name: 'Owner name',
+	selector: 'ownerName',
+	sortable: true,
+},
+{
+	name: 'Landmark',
+	selector: 'landMark',
+	sortable: true,
+},
+{
+	name: 'Latitude',
+	selector: 'latitude',
+	sortable: true,
+},
+{
+	name: 'Longitude',
+	selector: 'longitude',
+	sortable: true,
+},
+{
+	name: 'QR Code',
+	selector: 'qrCode',
+	sortable: true,
+},
+{
+	name: 'RFID Code',
+	selector: 'rfidCode',
+	sortable: true,
+},
+{
+	name: 'Additional details',
+	selector: 'additionalDetails',
+	sortable: true,
+},
+{
+	name: 'Email',
+	selector: 'email',
+	sortable: true,
+},
+{
+	name: 'Reason for follow up',
+	selector: 'reasonForFollowUp',
+	sortable: true,
+},
+{
+	name: 'Notes',
+	selector: 'notes',
+	sortable: true,
+},
+{
+	name: 'Pin code',
+	selector: 'esePinCodePinCode',
+	sortable: true,
+},
+{
+	name: 'POI Type',
+	selector: 'esePoiTypePoiTypeName',
+	sortable: true
+},
+{
+	name: 'Property usage type',
+	selector: 'esePoiPropertyUsageTypePropertyUsageTypeName',
+	sortable: true
+}];
 
 export const POIs = () => {
-	const [poisData, setPoisData] = useState();
+
+	const [pois, setPoisData] = useState({});
+	const [page, setPage] = useState(1);
+	const [sort, setSort] = useState('id,asc');
+	const [totalCount, setTotalCount] = useState(0);
 	const [selectedUser, setSelectedUser] = React.useState(null);
 	const [selectedWard, setSelectedWard] = React.useState(null);
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
+	const countPerPage = 20;
 
-	const poiApiUrl = '/services/services/api/ese-pois'
-	const userApiUrl = '/services/services/api/users';
-	const wardsApiUrl = '/services/services/api/ese-wards';
+	const fetchPoiData = async () => {
+		axios_auth.get(poiApiUrl + createQueryParams()).then(res => {
+			setPoisData(res.data);
+		})
+	}
+
+	const fetchPoiTotalCount = async () => {
+		axios_auth.get(poiApiUrl + `/count` + createQueryParams()).then(res => {
+			console.log(res)
+			setTotalCount(res.data);
+		})
+	}
+
+	const createQueryParams = () => {
+		let params = '?'
+		if (selectedUser && selectedUser.value) params += `createdBy.equals=${selectedUser.value}&`;
+		if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
+		params += `page=${page}&size=${countPerPage}&sort=${sort}`;
+		return params;
+	}
+
 
 	// GET POIs Users
 	const getUsers = async () => {
@@ -45,169 +183,53 @@ export const POIs = () => {
 		}
 	};
 
-	// GET ALL POIs
-	const fetchPoisData = async (queryparams = null) => {
-		let url = poiApiUrl;
-		if (queryparams) url += queryparams; // Appending query params
-
-		const res = await axios_auth.get(url);
-		if (res.data) {
-			setPoisData(res.data);
-		} else {
-			alert('Error fetching data');
-		}
-	};
-
 	useEffect(() => {
-		fetchPoisData();
 		getUsers();
 		getWards();
 	}, []);
 
 	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
 	useEffect(() => {
-		let queryparams = '?';
-		if (selectedUser && selectedUser.value) queryparams += `createdBy.equals=${selectedUser.value}&`;
-		if (selectedWard && selectedWard.value) queryparams += `eseWardId.equals=${selectedWard.value}&`;
-
-		fetchPoisData(queryparams);
+		setPage(1);
 	}, [selectedWard, selectedUser]);
 
-	const action = (e) => {
-		console.log('action executed', e);
-	};
 
-	const columnDefs = [
-		{
-			headerName: 'ID',
-			field: 'id',
-			width: '100px',
-			sortable: true,
+	useEffect(async () => {
+		await fetchPoiData();
+		fetchPoiTotalCount();
+	}, [page]);
+
+	useEffect(() => {
+		fetchPoiTotalCount();
+		fetchPoiData();
+	}, [sort]);
+
+	const onSort = (column, sortDirection, event) => {
+		console.log(column, sortDirection, event);
+		setSort(column.selector + ',' + sortDirection)
+	}
+
+	const customStyles = {
+		rows: {
+			style: {
+				maxHeight: '45px',
+				minHeight: '35px', // override the row height
+			}
 		},
-		{
-			headerName: 'Holding Number',
-			field: 'holdingNo',
-			width: '180px',
-			sortable: true,
-		},
-		{
-			headerName: 'Plot No',
-			field: 'plotNo',
-			width: '180px',
-			sortable: true,
-		},
-		{
-			headerName: 'Ward',
-			field: 'eseWardWardDesc',
-			sortable: true,
-		},
-		{
-			headerName: 'Guardian Name',
-			field: 'guardianName',
-			sortable: true,
-		},
-		{
-			headerName: 'Address 1',
-			field: 'address1',
-			sortable: true,
-		},
-		{
-			headerName: 'Address 2',
-			field: 'address2',
-			sortable: true,
-		},
-		{
-			headerName: 'Address 3',
-			field: 'address3',
-			sortable: true,
-		},
-		{
-			headerName: 'Mobile',
-			field: 'mobileNo',
-			sortable: true,
-		},
-		{
-			headerName: 'Owner name',
-			field: 'ownerName',
-			sortable: true,
-		},
-		{
-			headerName: 'Landmark',
-			field: 'landMark',
-			sortable: true,
-		},
-		{
-			headerName: 'Latitude',
-			field: 'latitude',
-			sortable: true,
-		},
-		{
-			headerName: 'Longitude',
-			field: 'longitude',
-			sortable: true,
-		},
-		{
-			headerName: 'QR Code',
-			field: 'qrCode',
-			sortable: true,
-		},
-		{
-			headerName: 'RFID Code',
-			field: 'rfidCode',
-			sortable: true,
-		},
-		{
-			headerName: 'Additional details',
-			field: 'additionalDetails',
-			sortable: true,
-		},
-		{
-			headerName: 'Email',
-			field: 'email',
-			sortable: true,
-		},
-		{
-			headerName: 'Reason for follow up',
-			field: 'reasonForFollowUp',
-			sortable: true,
-		},
-		{
-			headerName: 'Notes',
-			field: 'notes',
-			sortable: true,
-		},
-		{
-			headerName: 'Pin code',
-			field: 'esePinCodePinCode',
-			sortable: true,
-		},
-		{
-			headerName: 'POI Type',
-			field: 'esePoiTypePoiTypeName',
-		},
-		{
-			headerName: 'Property usage type',
-			field: 'esePoiPropertyUsageTypePropertyUsageTypeName',
-		},
-		{
-			headerName: 'Actions',
-			cellRendererFramework: function (params) {
-				return (
-					<span>
-						<i
-							className='fa fa-eye pr-4'
-							onClick={() => action(params.data)}
-						></i>
-						<i className='fa fa-pen pr-4' onClick={() => action('edit')}></i>
-						<i
-							className='fa fa-trash pr-4'
-							onClick={() => action('delete')}
-						></i>
-					</span>
-				);
+		headCells: {
+			style: {
+				paddingLeft: '8px', // override the cell padding for head cells
+				paddingRight: '8px',
+				width: '200px'
 			},
 		},
-	];
+		cells: {
+			style: {
+				paddingLeft: '8px', // override the cell padding for data cells
+				paddingRight: '8px',
+			},
+		},
+	};
 
 	return (
 		<div
@@ -217,30 +239,30 @@ export const POIs = () => {
 			<Row>
 				<Col className='co-sm-3 form-group'>
 					<div className="d-flex align-items-center">
-					<label htmlFor="selectedUser" className="mb-0 mr-3">By User</label>
-					<Select
-						className='react-select primary flex-fill'
-						classNamePrefix='react-select'
-						name='selectedUser'
-						value={selectedUser}
-						onChange={(value) => setSelectedUser(value)}
-						options={users}
-						placeholder='Single Select'
-					/>
+						<label htmlFor="selectedUser" className="mb-0 mr-3">By User</label>
+						<Select
+							className='react-select primary flex-fill'
+							classNamePrefix='react-select'
+							name='selectedUser'
+							value={selectedUser}
+							onChange={(value) => setSelectedUser(value)}
+							options={users}
+							placeholder='Single Select'
+						/>
 					</div>
 				</Col>
 
 				<Col className='co-sm-3 form-group'>
 					<div className="d-flex align-items-center">
-					<label htmlFor="wards" className="mb-0 mr-3">By Ward</label>
-					<Select
-						className='react-select primary flex-fill'
-						classNamePrefix='react-select'
-						name='wards'
-						value={selectedWard}
-						onChange={(value) => setSelectedWard(value)}
-						options={wards}
-					/>
+						<label htmlFor="wards" className="mb-0 mr-3">By Ward</label>
+						<Select
+							className='react-select primary flex-fill'
+							classNamePrefix='react-select'
+							name='wards'
+							value={selectedWard}
+							onChange={(value) => setSelectedWard(value)}
+							options={wards}
+						/>
 					</div>
 				</Col>
 
@@ -250,16 +272,26 @@ export const POIs = () => {
 				<Col className='co-sm-3'>
 
 				</Col>
+				<DataTable
+					title="POIs"
+					columns={columns}
+					data={pois}
+					highlightOnHover
+					fixedHeader={true}
+					customStyles={customStyles}
+					pagination
+					paginationServer
+					paginationTotalRows={totalCount - 1}
+					paginationResetDefaultPage={true}
+					paginationPerPage={countPerPage}
+					paginationComponentOptions={{
+						noRowsPerPage: true
+					}}
+					onChangePage={page => setPage(page)}
+					// sortServer={true}
+					onSort={onSort}
+				/>
 			</Row>
-			<div className='ag-theme-alpine' style={{ flex: 'auto', width: '100%' }}>
-				<AgGridReact
-					pagination={true}
-					animateRows={true}
-					columnDefs={columnDefs}
-					rowData={poisData}
-					 paginationPageSize="60"
-				></AgGridReact>
-			</div>
 		</div>
 	);
-};
+}

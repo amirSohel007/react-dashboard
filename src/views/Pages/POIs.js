@@ -255,7 +255,7 @@ export const POIs = () => {
 					pagination={true}
 					animateRows={true}
 					columnDefs={columnDefs}
-					 rowData={poisData}
+					rowData={poisData}
 					 paginationPageSize="60"
 				></AgGridReact>
 			</div>

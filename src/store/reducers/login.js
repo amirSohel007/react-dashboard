@@ -2,6 +2,8 @@ import { LOGGING_IN, LOGGED_IN, LOGIN_ERROR, LOGOUT } from '../actions/actionTyp
 
 const INITIAL_STATE = {
 	isLoggedIn: false,
+	isLoggingIn: false,
+	loginError: undefined,
 };
 
 export default function (state = INITIAL_STATE, action) {

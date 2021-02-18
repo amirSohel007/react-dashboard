@@ -525,6 +525,11 @@
     z-index: 999999 !important;
 }
 
+.form-group label {
+	font-size: 14px;
+    color: #4a4a4a;
+}
+
 body {
     overflow-x: hidden;
 }

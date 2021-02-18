@@ -5,7 +5,7 @@ import { useToasts } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
 import { no_auth_axios } from '../../api';
 import { connect } from 'react-redux';
-import { login } from '../../store/actions/login'
+import { login } from '../../store/actions/login';
 // react-bootstrap components
 import {
 	Badge,
@@ -25,18 +25,17 @@ function LoginPage(props) {
 	const [cardClasses, setCardClasses] = React.useState('card-hidden');
 	const { isLoggedIn } = props.loginState;
 
-	useEffect( () => {
-		console.log("isLoggedIn", isLoggedIn)
+	useEffect(() => {
+		console.log('isLoggedIn', isLoggedIn);
 
-		if(isLoggedIn) {
+		if (isLoggedIn) {
 			addToast('Logged in sucessfully', {
 				appearance: 'success',
 				autoDismiss: true,
 			});
 			history.push('/admin/home');
-		}	
-	}, [isLoggedIn])
-
+		}
+	}, [isLoggedIn]);
 
 	// Login Method handle
 	// const onSubmit = async (data) => {
@@ -142,18 +141,14 @@ function LoginPage(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		loginState: state.login
-	};
-};
-  
-  
-const mapDispatchToProps = (dispatch) => {
-	return {
-		login: data => dispatch(login(data)),
+		loginState: state.login,
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(LoginPage);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		login: (data) => dispatch(login(data)),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

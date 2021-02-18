@@ -6,27 +6,24 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 import {
-	Badge,
-	Button,
-	Card,
-	Form,
-	InputGroup,
-	Navbar,
-	Nav,
-	Container,
 	Row,
 	Col,
 } from 'react-bootstrap';
 
 export const POIs = () => {
 	const [poisData, setPoisData] = useState();
-	const [singleSelect, setSingleSelect] = React.useState('');
+	const [selectedUser, setSelectedUser] = React.useState(null);
+	const [selectedWard, setSelectedWard] = React.useState(null);
 	const [users, setUsers] = useState([]);
-	const [wordDesc, setWordDesc] = useState([]);
+	const [wards, setWards] = useState([]);
+
+	const poiApiUrl = '/services/services/api/ese-pois'
+	const userApiUrl = '/services/services/api/users';
+	const wardsApiUrl = '/services/services/api/ese-wards';
 
 	// GET POIs Users
 	const getUsers = async () => {
-		const res = await axios_auth.get('/services/services/api/users');
+		const res = await axios_auth.get(userApiUrl);
 		if (res.data) {
 			let usersList = [];
 			res.data.map((user) =>
@@ -36,21 +33,23 @@ export const POIs = () => {
 		}
 	};
 
-	const getUsersById = async () => {
-		const res = await axios_auth.get('/services/services/api/ese-wards');
+	// GET ALL WARDS
+	const getWards = async () => {
+		const res = await axios_auth.get(wardsApiUrl);
 		if (res.data) {
 			let usersList = [];
 			res.data.map((user) =>
 				usersList.push({ value: user.id, label: user.wardDesc })
 			);
-			setWordDesc(usersList);
+			setWards(usersList);
 		}
 	};
 
 	// GET ALL POIs
-	const fetchPoisData = async (params = null) => {
-		let url = '/services/services/api/ese-pois';
-		if (params) url += `?${params}`;
+	const fetchPoisData = async (queryparams = null) => {
+		let url = poiApiUrl;
+		if (queryparams) url += queryparams; // Appending query params
+
 		const res = await axios_auth.get(url);
 		if (res.data) {
 			setPoisData(res.data);
@@ -59,18 +58,20 @@ export const POIs = () => {
 		}
 	};
 
-	// GET DATA BASED ON SPECIFIC USER
-	const fetchUserSpecificPois = (user) => {
-		setSingleSelect(user);
-		let params = `createdBy.equals=${user.value}`;
-		fetchPoisData(params);
-	};
-
 	useEffect(() => {
 		fetchPoisData();
 		getUsers();
-		getUsersById();
+		getWards();
 	}, []);
+
+	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
+	useEffect(() => {
+		let queryparams = '?';
+		if (selectedUser && selectedUser.value) queryparams += `createdBy.equals=${selectedUser.value}&`;
+		if (selectedWard && selectedWard.value) queryparams += `eseWardId.equals=${selectedWard.value}&`;
+
+		fetchPoisData(queryparams);
+	}, [selectedWard, selectedUser]);
 
 	const action = (e) => {
 		console.log('action executed', e);
@@ -216,13 +217,13 @@ export const POIs = () => {
 			<Row>
 				<Col className='co-sm-3 form-group'>
 					<div className="d-flex align-items-center">
-					<label htmlFor="singleSelect" className="mb-0 mr-3">By Users</label>
+					<label htmlFor="selectedUser" className="mb-0 mr-3">By User</label>
 					<Select
 						className='react-select primary flex-fill'
 						classNamePrefix='react-select'
-						name='singleSelect'
-						value={singleSelect}
-						onChange={(value) => fetchUserSpecificPois(value)}
+						name='selectedUser'
+						value={selectedUser}
+						onChange={(value) => setSelectedUser(value)}
 						options={users}
 						placeholder='Single Select'
 					/>
@@ -231,14 +232,14 @@ export const POIs = () => {
 
 				<Col className='co-sm-3 form-group'>
 					<div className="d-flex align-items-center">
-					<label htmlFor="wordDesc" className="mb-0 mr-3">By Id</label>
+					<label htmlFor="wards" className="mb-0 mr-3">By Ward</label>
 					<Select
 						className='react-select primary flex-fill'
 						classNamePrefix='react-select'
-						name='wordDesc'
-						value={wordDesc}
-						onChange={(value) => setWordDesc(value)}
-						options={wordDesc}
+						name='wards'
+						value={selectedWard}
+						onChange={(value) => setSelectedWard(value)}
+						options={wards}
 					/>
 					</div>
 				</Col>

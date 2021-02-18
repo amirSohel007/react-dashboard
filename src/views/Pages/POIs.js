@@ -252,12 +252,12 @@ export const POIs = () => {
 			</Row>
 			<div className='ag-theme-alpine' style={{ flex: 'auto', width: '100%' }}>
 				<AgGridReact
-				pagination={true}
-				animateRows={true}
-				columnDefs={columnDefs}
-				 rowData={poisData}
-				 paginationPageSize="60"
-				 ></AgGridReact>
+					pagination={true}
+					animateRows={true}
+					columnDefs={columnDefs}
+					 rowData={poisData}
+					 paginationPageSize="60"
+				></AgGridReact>
 			</div>
 		</div>
 	);

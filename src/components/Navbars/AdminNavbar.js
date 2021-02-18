@@ -1,36 +1,19 @@
 import React from 'react';
 // react-bootstrap components
-import {
-	Button,
-
-
-
-
-
-
-
-
-	Container, Dropdown,
-	Form,
-	InputGroup,
-
-	Nav, Navbar
-} from 'react-bootstrap';
+import { Button, Container, Dropdown, Form, InputGroup, Nav, Navbar } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { LOGOUT } from '../../store/actions/actionTypes';
 
-
-
 function AdminNavbar() {
 	const [collapseOpen, setCollapseOpen] = React.useState(false);
 	const dispatch = useDispatch();
-	const history = useHistory()
+	const history = useHistory();
 
 	const handleSignOut = () => {
-		dispatch({ type: LOGOUT})
-		history.push('/auth/login-page')
-	}
+		dispatch({ type: LOGOUT });
+		history.push('/auth/login-page');
+	};
 	return (
 		<>
 			<Navbar expand='lg'>
@@ -145,10 +128,7 @@ function AdminNavbar() {
 										<i className='nc-icon nc-lock-circle-open'></i>
 										Lock Screen
 									</Dropdown.Item>
-									<Dropdown.Item
-										className='text-danger'
-										href='#pablo'
-										onClick={handleSignOut}>
+									<Dropdown.Item className='text-danger' href='#pablo' onClick={handleSignOut}>
 										<i className='nc-icon nc-button-power'></i>
 										Log out
 									</Dropdown.Item>

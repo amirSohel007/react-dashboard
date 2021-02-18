@@ -28,14 +28,22 @@ import { ToastProvider } from 'react-toast-notifications';
 import { Provider } from 'react-redux';
 import store from './store/store';
 
+const CheckLogin = () => {
+	if (localStorage.getItem('token') !== null) {
+		return <Redirect to='/admin/home' />;
+	} else {
+		return <Redirect to='/auth/login-page' />;
+	}
+};
+
 ReactDOM.render(
 	<Provider store={store}>
 		<BrowserRouter>
 			<Switch>
 				<ToastProvider>
+					<CheckLogin />
 					<Route path='/auth' render={(props) => <AuthLayout {...props} />} />
 					<Route path='/admin' render={(props) => <AdminLayout {...props} />} />
-					<Redirect from='/' to='/auth/login-page' />
 				</ToastProvider>
 			</Switch>
 		</BrowserRouter>

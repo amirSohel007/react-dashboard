@@ -28,30 +28,6 @@ function LoginPage(props) {
 		}
 	}, [isLoggedIn]);
 
-	// Login Method handle
-	// const onSubmit = async (data) => {
-	// 	await no_auth_axios
-	// 		.post('/auth/login', data)
-	// 		.then((res) => {
-	// 			if (res.data) {
-	// 				// addToast('Logged in sucessfully', {
-	// 				// 	appearance: 'success',
-	// 				// 	autoDismiss: true,
-	// 				// });
-	// 				// history.push('/admin/home');
-	// 				const { access_token } = res.data;
-	// 				localStorage.setItem('token', access_token);
-	// 			}
-	// 			res.data;
-	// 		})
-	// 		.catch((err) => {
-	// 			addToast(err?.message, {
-	// 				appearance: 'error',
-	// 				autoDismiss: true,
-	// 			});
-	// 		});
-	// };
-
 	React.useEffect(() => {
 		setTimeout(function () {
 			setCardClasses('');

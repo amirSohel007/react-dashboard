@@ -7,16 +7,7 @@ import { no_auth_axios } from '../../api';
 import { connect } from 'react-redux';
 import { login } from '../../store/actions/login';
 // react-bootstrap components
-import {
-	Badge,
-	Button,
-	Card,
-	Form,
-	Navbar,
-	Nav,
-	Container,
-	Col,
-} from 'react-bootstrap';
+import { Badge, Button, Card, Form, Navbar, Nav, Container, Col } from 'react-bootstrap';
 
 function LoginPage(props) {
 	let history = useHistory();
@@ -71,16 +62,11 @@ function LoginPage(props) {
 			<div
 				className='full-page section-image'
 				data-color='black'
-				data-image={require('assets/img/bg4.jpg').default}
-			>
+				data-image={require('assets/img/bg4.jpg').default}>
 				<div className='content d-flex align-items-center p-0'>
 					<Container>
 						<Col className='mx-auto' lg='4' md='8'>
-							<Form
-								action=''
-								className='form'
-								onSubmit={handleSubmit(props.login)}
-							>
+							<Form action='' className='form' onSubmit={handleSubmit(props.login)}>
 								<Card className={'card-login ' + cardClasses}>
 									<Card.Header>
 										<h3 className='header text-center'>Login</h3>
@@ -93,8 +79,7 @@ function LoginPage(props) {
 													placeholder='Enter email'
 													type='text'
 													name='username'
-													ref={register({ required: true })}
-												></Form.Control>
+													ref={register({ required: true })}></Form.Control>
 											</Form.Group>
 											<Form.Group>
 												<label>Password</label>
@@ -102,15 +87,11 @@ function LoginPage(props) {
 													placeholder='Password'
 													type='password'
 													name='password'
-													ref={register({ required: true })}
-												></Form.Control>
+													ref={register({ required: true })}></Form.Control>
 											</Form.Group>
 											<Form.Check className='pl-0'>
 												<Form.Check.Label>
-													<Form.Check.Input
-														defaultChecked
-														type='checkbox'
-													></Form.Check.Input>
+													<Form.Check.Input defaultChecked type='checkbox'></Form.Check.Input>
 													<span className='form-check-sign'></span>
 													Subscribe to newsletter
 												</Form.Check.Label>
@@ -130,10 +111,8 @@ function LoginPage(props) {
 				<div
 					className='full-page-background'
 					style={{
-						backgroundImage:
-							'url(' + require('assets/img/bg4.jpg').default + ')',
-					}}
-				></div>
+						backgroundImage: 'url(' + require('assets/img/bg4.jpg').default + ')',
+					}}></div>
 			</div>
 		</>
 	);

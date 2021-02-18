@@ -410,9 +410,8 @@ input:focus {
 }
 
 .page-header .filter:after {
-	background: rgba(0, 0, 0, 0)
-		linear-gradient(to bottom, #9368e9 0%, #943bea 100%) repeat scroll 0 0/150%
-		150%;
+	background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #9368e9 0%, #943bea 100%) repeat scroll 0
+		0/150% 150%;
 	content: '';
 	display: block;
 	height: 450px;
@@ -553,15 +552,7 @@ input:focus {
 	z-index: 4;
 	padding-bottom: 100px;
 }
-.sidebar
-	.sidebar-wrapper
-	.nav
-	.nav-item
-	[data-toggle='collapse']
-	~ div
-	.nav
-	.nav-item
-	.nav-link {
+.sidebar .sidebar-wrapper .nav .nav-item [data-toggle='collapse'] ~ div .nav .nav-item .nav-link {
 	background: transparent;
 	padding-left: 55px;
 	text-transform: capitalize;
@@ -598,14 +589,7 @@ input:focus {
 	.nav-link {
 	background: rgba(255, 255, 255, 0.13);
 }
-.sidebar
-	.sidebar-wrapper
-	.nav
-	.nav-item
-	[data-toggle='collapse']
-	~ div
-	.nav
-	.sidebar-normal {
+.sidebar .sidebar-wrapper .nav .nav-item [data-toggle='collapse'] ~ div .nav .sidebar-normal {
 	left: 15px;
 }
 .sidebar .sidebar-wrapper .nav .nav-link p {
@@ -854,11 +838,7 @@ input:focus {
 .sidebar[data-color='black']:after,
 .bootstrap-navbar[data-color='black']:after {
 	background: #797979;
-	background: -moz-linear-gradient(
-		top,
-		#797979 0%,
-		rgba(121, 121, 121, 0.7) 100%
-	);
+	background: -moz-linear-gradient(top, #797979 0%, rgba(121, 121, 121, 0.7) 100%);
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -866,37 +846,17 @@ input:focus {
 		color-stop(0%, #797979),
 		color-stop(100%, rgba(121, 121, 121, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#797979 0%,
-		rgba(121, 121, 121, 0.7) 100%
-	);
-	background: -o-linear-gradient(
-		top,
-		#797979 0%,
-		rgba(121, 121, 121, 0.7) 100%
-	);
-	background: -ms-linear-gradient(
-		top,
-		#797979 0%,
-		rgba(121, 121, 121, 0.7) 100%
-	);
-	background: linear-gradient(
-		to bottom,
-		#797979 0%,
-		rgba(121, 121, 121, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #797979 0%, rgba(121, 121, 121, 0.7) 100%);
+	background: -o-linear-gradient(top, #797979 0%, rgba(121, 121, 121, 0.7) 100%);
+	background: -ms-linear-gradient(top, #797979 0%, rgba(121, 121, 121, 0.7) 100%);
+	background: linear-gradient(to bottom, #797979 0%, rgba(121, 121, 121, 0.7) 100%);
 	background-size: 150% 150%;
 }
 
 .sidebar[data-color='blue']:after,
 .bootstrap-navbar[data-color='blue']:after {
 	background: #447df7;
-	background: -moz-linear-gradient(
-		top,
-		#447df7 0%,
-		rgba(83, 60, 225, 0.7) 100%
-	);
+	background: -moz-linear-gradient(top, #447df7 0%, rgba(83, 60, 225, 0.7) 100%);
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -904,29 +864,17 @@ input:focus {
 		color-stop(0%, #447df7),
 		color-stop(100%, rgba(83, 60, 225, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#447df7 0%,
-		rgba(83, 60, 225, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #447df7 0%, rgba(83, 60, 225, 0.7) 100%);
 	background: -o-linear-gradient(top, #447df7 0%, rgba(83, 60, 225, 0.7) 100%);
 	background: -ms-linear-gradient(top, #447df7 0%, rgba(83, 60, 225, 0.7) 100%);
-	background: linear-gradient(
-		to bottom,
-		#447df7 0%,
-		rgba(83, 60, 225, 0.7) 100%
-	);
+	background: linear-gradient(to bottom, #447df7 0%, rgba(83, 60, 225, 0.7) 100%);
 	background-size: 150% 150%;
 }
 
 .sidebar[data-color='azure']:after,
 .bootstrap-navbar[data-color='azure']:after {
 	background: #23ccef;
-	background: -moz-linear-gradient(
-		top,
-		#23ccef 0%,
-		rgba(64, 145, 255, 0.7) 100%
-	);
+	background: -moz-linear-gradient(top, #23ccef 0%, rgba(64, 145, 255, 0.7) 100%);
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -934,33 +882,17 @@ input:focus {
 		color-stop(0%, #23ccef),
 		color-stop(100%, rgba(64, 145, 255, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#23ccef 0%,
-		rgba(64, 145, 255, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #23ccef 0%, rgba(64, 145, 255, 0.7) 100%);
 	background: -o-linear-gradient(top, #23ccef 0%, rgba(64, 145, 255, 0.7) 100%);
-	background: -ms-linear-gradient(
-		top,
-		#23ccef 0%,
-		rgba(64, 145, 255, 0.7) 100%
-	);
-	background: linear-gradient(
-		to bottom,
-		#23ccef 0%,
-		rgba(64, 145, 255, 0.7) 100%
-	);
+	background: -ms-linear-gradient(top, #23ccef 0%, rgba(64, 145, 255, 0.7) 100%);
+	background: linear-gradient(to bottom, #23ccef 0%, rgba(64, 145, 255, 0.7) 100%);
 	background-size: 150% 150%;
 }
 
 .sidebar[data-color='green']:after,
 .bootstrap-navbar[data-color='green']:after {
 	background: #87cb16;
-	background: -moz-linear-gradient(
-		top,
-		#87cb16 0%,
-		rgba(109, 192, 48, 0.7) 100%
-	);
+	background: -moz-linear-gradient(top, #87cb16 0%, rgba(109, 192, 48, 0.7) 100%);
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -968,33 +900,17 @@ input:focus {
 		color-stop(0%, #87cb16),
 		color-stop(100%, rgba(109, 192, 48, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#87cb16 0%,
-		rgba(109, 192, 48, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #87cb16 0%, rgba(109, 192, 48, 0.7) 100%);
 	background: -o-linear-gradient(top, #87cb16 0%, rgba(109, 192, 48, 0.7) 100%);
-	background: -ms-linear-gradient(
-		top,
-		#87cb16 0%,
-		rgba(109, 192, 48, 0.7) 100%
-	);
-	background: linear-gradient(
-		to bottom,
-		#87cb16 0%,
-		rgba(109, 192, 48, 0.7) 100%
-	);
+	background: -ms-linear-gradient(top, #87cb16 0%, rgba(109, 192, 48, 0.7) 100%);
+	background: linear-gradient(to bottom, #87cb16 0%, rgba(109, 192, 48, 0.7) 100%);
 	background-size: 150% 150%;
 }
 
 .sidebar[data-color='orange']:after,
 .bootstrap-navbar[data-color='orange']:after {
 	background: #ffa534;
-	background: -moz-linear-gradient(
-		top,
-		#ffa534 0%,
-		rgba(255, 82, 33, 0.7) 100%
-	);
+	background: -moz-linear-gradient(top, #ffa534 0%, rgba(255, 82, 33, 0.7) 100%);
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -1002,18 +918,10 @@ input:focus {
 		color-stop(0%, #ffa534),
 		color-stop(100%, rgba(255, 82, 33, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#ffa534 0%,
-		rgba(255, 82, 33, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #ffa534 0%, rgba(255, 82, 33, 0.7) 100%);
 	background: -o-linear-gradient(top, #ffa534 0%, rgba(255, 82, 33, 0.7) 100%);
 	background: -ms-linear-gradient(top, #ffa534 0%, rgba(255, 82, 33, 0.7) 100%);
-	background: linear-gradient(
-		to bottom,
-		#ffa534 0%,
-		rgba(255, 82, 33, 0.7) 100%
-	);
+	background: linear-gradient(to bottom, #ffa534 0%, rgba(255, 82, 33, 0.7) 100%);
 	background-size: 150% 150%;
 }
 
@@ -1028,11 +936,7 @@ input:focus {
 		color-stop(0%, #fb404b),
 		color-stop(100%, rgba(187, 5, 2, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#fb404b 0%,
-		rgba(187, 5, 2, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #fb404b 0%, rgba(187, 5, 2, 0.7) 100%);
 	background: -o-linear-gradient(top, #fb404b 0%, rgba(187, 5, 2, 0.7) 100%);
 	background: -ms-linear-gradient(top, #fb404b 0%, rgba(187, 5, 2, 0.7) 100%);
 	background: linear-gradient(to bottom, #fb404b 0%, rgba(187, 5, 2, 0.7) 100%);
@@ -1042,11 +946,7 @@ input:focus {
 .sidebar[data-color='purple']:after,
 .bootstrap-navbar[data-color='purple']:after {
 	background: #9368e9;
-	background: -moz-linear-gradient(
-		top,
-		#9368e9 0%,
-		rgba(148, 59, 234, 0.7) 100%
-	);
+	background: -moz-linear-gradient(top, #9368e9 0%, rgba(148, 59, 234, 0.7) 100%);
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -1054,22 +954,10 @@ input:focus {
 		color-stop(0%, #9368e9),
 		color-stop(100%, rgba(148, 59, 234, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#9368e9 0%,
-		rgba(148, 59, 234, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #9368e9 0%, rgba(148, 59, 234, 0.7) 100%);
 	background: -o-linear-gradient(top, #9368e9 0%, rgba(148, 59, 234, 0.7) 100%);
-	background: -ms-linear-gradient(
-		top,
-		#9368e9 0%,
-		rgba(148, 59, 234, 0.7) 100%
-	);
-	background: linear-gradient(
-		to bottom,
-		#9368e9 0%,
-		rgba(148, 59, 234, 0.7) 100%
-	);
+	background: -ms-linear-gradient(top, #9368e9 0%, rgba(148, 59, 234, 0.7) 100%);
+	background: linear-gradient(to bottom, #9368e9 0%, rgba(148, 59, 234, 0.7) 100%);
 	background-size: 150% 150%;
 }
 
@@ -1090,36 +978,12 @@ input:focus {
 	margin-bottom: 0;
 }
 
-.sidebar-mini
-	.sidebar
-	.sidebar-wrapper
-	.nav
-	.nav-item:hover
-	.collapse
-	.nav-item
-	.nav-link {
+.sidebar-mini .sidebar .sidebar-wrapper .nav .nav-item:hover .collapse .nav-item .nav-link {
 	padding: 5px 15px;
 }
 
-.sidebar
-	.sidebar-wrapper
-	.nav
-	[data-toggle='collapse']
-	~ div
-	> ul
-	> li
-	> a
-	.sidebar-mini,
-.sidebar
-	.sidebar-wrapper
-	.user
-	.info
-	[data-toggle='collapse']
-	~ div
-	> ul
-	> li
-	> a
-	.sidebar-mini {
+.sidebar .sidebar-wrapper .nav [data-toggle='collapse'] ~ div > ul > li > a .sidebar-mini,
+.sidebar .sidebar-wrapper .user .info [data-toggle='collapse'] ~ div > ul > li > a .sidebar-mini {
 	text-transform: uppercase;
 	float: left;
 	width: 30px;
@@ -1127,25 +991,8 @@ input:focus {
 	letter-spacing: 1px;
 }
 
-.sidebar
-	.sidebar-wrapper
-	> .nav
-	[data-toggle='collapse']
-	~ div
-	> ul
-	> li
-	> a
-	.sidebar-normal,
-.sidebar
-	.sidebar-wrapper
-	.user
-	.info
-	[data-toggle='collapse']
-	~ div
-	> ul
-	> li
-	> a
-	.sidebar-normal,
+.sidebar .sidebar-wrapper > .nav [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
+.sidebar .sidebar-wrapper .user .info [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
 .off-canvas-sidebar
 	.sidebar-wrapper
 	> .nav
@@ -1246,26 +1093,12 @@ input:focus {
 	.sidebar-mini .sidebar .info .caret {
 		opacity: 0;
 	}
-	.sidebar-mini
-		.sidebar
-		.info
-		[data-toggle='collapse']
-		~ div
-		> ul
-		> li:last-child
-		> a {
+	.sidebar-mini .sidebar .info [data-toggle='collapse'] ~ div > ul > li:last-child > a {
 		margin-bottom: 5px;
 		border-bottom-left-radius: 3px;
 		border-bottom-right-radius: 3px;
 	}
-	.sidebar-mini
-		.sidebar
-		.info
-		[data-toggle='collapse']
-		~ div
-		> ul
-		> li:first-child
-		> a {
+	.sidebar-mini .sidebar .info [data-toggle='collapse'] ~ div > ul > li:first-child > a {
 		margin-top: 5px;
 		border-top-left-radius: 3px;
 		border-top-right-radius: 3px;
@@ -1284,13 +1117,7 @@ input:focus {
 		-ms-transform: translate3d(0px, 0, 0);
 		transform: translate3d(0px, 0, 0);
 	}
-	.sidebar-mini
-		.sidebar:hover
-		.nav-item
-		[data-toggle='collapse']
-		~ div
-		.nav
-		.sidebar-normal {
+	.sidebar-mini .sidebar:hover .nav-item [data-toggle='collapse'] ~ div .nav .sidebar-normal {
 		left: 0;
 	}
 	.sidebar-mini .sidebar:hover .caret {
@@ -3994,10 +3821,7 @@ fieldset[disabled] .form-control {
 	cursor: not-allowed;
 }
 
-.form-check
-	.form-check-label
-	input[type='checkbox']:disabled
-	+ .form-check-sign,
+.form-check .form-check-label input[type='checkbox']:disabled + .form-check-sign,
 .form-check-radio input[type='radio']:disabled + .form-check-sign {
 	pointer-events: none !important;
 }
@@ -4497,9 +4321,7 @@ fieldset[disabled] .form-control {
 	color: #ffffff;
 }
 
-.nav-mobile-menu.nav
-	.navbar-search-form
-	.form-control::-webkit-input-placeholder {
+.nav-mobile-menu.nav .navbar-search-form .form-control::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
 	color: #ffffff;
 }
@@ -5101,16 +4923,8 @@ fieldset[disabled] .form-control {
 	-ms-transition: all 150ms ease-in;
 	transition: all 150ms ease-in;
 }
-.accordions
-	.card
-	.card-header
-	a[data-toggle='collapse'][aria-expanded='true']
-	.caret,
-.accordions
-	.card
-	.card-header
-	a[data-toggle='collapse-hover'][aria-expanded='true']
-	.caret {
+.accordions .card .card-header a[data-toggle='collapse'][aria-expanded='true'] .caret,
+.accordions .card .card-header a[data-toggle='collapse-hover'][aria-expanded='true'] .caret {
 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 	-webkit-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
@@ -7350,12 +7164,7 @@ fieldset[disabled] .form-control {
 	[class*='navbar-'] .navbar-nav .show .dropdown-menu > li > a:focus {
 		background-color: rgba(255, 255, 255, 0.1);
 	}
-	[class*='navbar-']
-		.navbar-nav.navbar-nav
-		.show
-		.dropdown-menu
-		> li
-		> a:active {
+	[class*='navbar-'] .navbar-nav.navbar-nav .show .dropdown-menu > li > a:active {
 		opacity: 1;
 	}
 	[class*='navbar-'] .navbar-nav .dropdown > a:hover .caret {
@@ -7523,8 +7332,7 @@ fieldset[disabled] .form-control {
 	-ms-user-select: none;
 	user-select: none;
 	vertical-align: middle;
-	-webkit-transition: border-color ease-in-out 0.15s,
-		box-shadow ease-in-out 0.15s;
+	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
@@ -9799,17 +9607,11 @@ div.table-responsive > div.dataTables_wrapper > div.row {
 	margin: 0;
 }
 
-div.table-responsive
-	> div.dataTables_wrapper
-	> div.row
-	> div[class^='col-']:first-child {
+div.table-responsive > div.dataTables_wrapper > div.row > div[class^='col-']:first-child {
 	padding-left: 0;
 }
 
-div.table-responsive
-	> div.dataTables_wrapper
-	> div.row
-	> div[class^='col-']:last-child {
+div.table-responsive > div.dataTables_wrapper > div.row > div[class^='col-']:last-child {
 	padding-right: 0;
 }
 
@@ -9919,14 +9721,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
 	background-color: #fff;
 }
 
-table.dataTable.dtr-inline.collapsed
-	> tbody
-	> tr.parent
-	> td:first-child:before,
-table.dataTable.dtr-inline.collapsed
-	> tbody
-	> tr.parent
-	> th:first-child:before {
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before {
 	content: '-';
 	color: #ed362c;
 }
@@ -9940,14 +9736,8 @@ table.dataTable.dtr-inline.collapsed.compact > tbody > tr > th:first-child {
 	padding-left: 27px;
 }
 
-table.dataTable.dtr-inline.collapsed.compact
-	> tbody
-	> tr
-	> td:first-child:before,
-table.dataTable.dtr-inline.collapsed.compact
-	> tbody
-	> tr
-	> th:first-child:before {
+table.dataTable.dtr-inline.collapsed.compact > tbody > tr > td:first-child:before,
+table.dataTable.dtr-inline.collapsed.compact > tbody > tr > th:first-child:before {
 	top: 5px;
 	left: 4px;
 	height: 14px;
@@ -12154,9 +11944,7 @@ be a descendant of the grid when it is being dragged.
 	opacity: 0.9;
 }
 
-.ps-container:hover.ps-in-scrolling.ps-x
-	> .ps-scrollbar-x-rail
-	> .ps-scrollbar-x {
+.ps-container:hover.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail > .ps-scrollbar-x {
 	background-color: #999;
 }
 
@@ -12165,9 +11953,7 @@ be a descendant of the grid when it is being dragged.
 	opacity: 0.9;
 }
 
-.ps-container:hover.ps-in-scrolling.ps-y
-	> .ps-scrollbar-y-rail
-	> .ps-scrollbar-y {
+.ps-container:hover.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail > .ps-scrollbar-y {
 	background-color: #999;
 }
 
@@ -12272,8 +12058,7 @@ select.selectpicker {
 	z-index: auto;
 }
 
-.bootstrap-select.form-control.input-group-btn:not(:first-child):not(:last-child)
-	> .btn {
+.bootstrap-select.form-control.input-group-btn:not(:first-child):not(:last-child) > .btn {
 	border-radius: 0;
 }
 
@@ -12443,11 +12228,7 @@ select.selectpicker {
 	margin-top: -1px;
 }
 
-.bootstrap-select.btn-group.show-tick
-	.dropdown-menu
-	li.selected
-	a
-	span.check-mark {
+.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a span.check-mark {
 	position: absolute;
 	display: inline-block;
 	right: 20px;
@@ -12839,11 +12620,7 @@ select.selectpicker {
 	cursor: pointer;
 }
 .bootstrap-datetimepicker-widget table thead tr:first-child th:hover span,
-.bootstrap-datetimepicker-widget
-	table
-	thead
-	tr:first-child
-	th.picker-switch:hover {
+.bootstrap-datetimepicker-widget table thead tr:first-child th.picker-switch:hover {
 	background: #e3e3e3;
 }
 .bootstrap-datetimepicker-widget table td > div {
@@ -14540,10 +14317,7 @@ button.rbc-input::-moz-focus-inner {
 .card-wizard[data-color='primary'] .radio input[type='radio']:checked ~ .check {
 	background-color: #447df7;
 }
-.card-wizard[data-color='primary']
-	.radio
-	input[type='radio']:checked
-	~ .circle {
+.card-wizard[data-color='primary'] .radio input[type='radio']:checked ~ .circle {
 	border-color: #447df7;
 }
 .card-wizard[data-color='green'] .moving-tab {
@@ -15206,12 +14980,7 @@ td.rdtYear:hover {
 	color: #ffffff;
 }
 
-.rdtTime
-	.rdtCounters
-	.rdtCounterSeparator
-	+ .rdtCounter
-	+ .rdtCounter
-	.rdtCount {
+.rdtTime .rdtCounters .rdtCounterSeparator + .rdtCounter + .rdtCounter .rdtCount {
 	font-size: 1rem;
 }
 
@@ -15274,12 +15043,8 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 	background-color: transparent;
 }
 
-.react-select
-	.react-select__menu
-	.react-select__option.react-select__option--is-selected,
-.react-select
-	.react-select__menu
-	.react-select__option.react-select__option--is-selected:active,
+.react-select .react-select__menu .react-select__option.react-select__option--is-selected,
+.react-select .react-select__menu .react-select__option.react-select__option--is-selected:active,
 .react-select
 	.react-select__menu
 	.react-select__option.react-select__option--is-selected:not(:first-child),
@@ -15306,12 +15071,8 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 	color: #333;
 }
 
-.react-select
-	.react-select__menu
-	.react-select__option.react-select__option--is-disabled,
-.react-select
-	.react-select__menu
-	.react-select__option.react-select__option--is-disabled:active {
+.react-select .react-select__menu .react-select__option.react-select__option--is-disabled,
+.react-select .react-select__menu .react-select__option.react-select__option--is-disabled:active {
 	color: #cccccc;
 	cursor: default;
 }
@@ -15393,16 +15154,10 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 	vertical-align: middle;
 	text-align: right;
 }
-.react-select
-	.react-select__control
-	.react-select__indicators
-	.react-select__indicator-separator {
+.react-select .react-select__control .react-select__indicators .react-select__indicator-separator {
 	display: none;
 }
-.react-select
-	.react-select__control
-	.react-select__indicators
-	.react-select__indicator {
+.react-select .react-select__control .react-select__indicators .react-select__indicator {
 	padding: 0;
 	display: inline-block;
 }
@@ -15445,17 +15200,12 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 	position: relative;
 	margin-right: 3px;
 }
-.react-select
-	.react-select__control
-	.react-select__indicators
-	.react-select__clear-indicator
-	> * {
+.react-select .react-select__control .react-select__indicators .react-select__clear-indicator > * {
 	display: none;
 }
 
 .react-select.primary .react-select__control.react-select__control--is-focused,
-.react-select.primary
-	.react-select__control.react-select__control--is-focused:hover {
+.react-select.primary .react-select__control.react-select__control--is-focused:hover {
 	border-color: #447df7;
 }
 
@@ -15473,22 +15223,17 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 .react-select.primary .react-select__multi-value {
 	border: 1px solid #447df7;
 }
-.react-select.primary
-	.react-select__multi-value
-	.react-select__multi-value__remove {
+.react-select.primary .react-select__multi-value .react-select__multi-value__remove {
 	color: #2c6cf6;
 	border-left: 1px solid #2c6cf6;
 }
-.react-select.primary
-	.react-select__multi-value
-	.react-select__multi-value__remove:hover {
+.react-select.primary .react-select__multi-value .react-select__multi-value__remove:hover {
 	color: #447df7;
 	background-color: transparent;
 }
 
 .react-select.success .react-select__control.react-select__control--is-focused,
-.react-select.success
-	.react-select__control.react-select__control--is-focused:hover {
+.react-select.success .react-select__control.react-select__control--is-focused:hover {
 	border-color: #87cb16;
 }
 
@@ -15506,22 +15251,17 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 .react-select.success .react-select__multi-value {
 	border: 1px solid #87cb16;
 }
-.react-select.success
-	.react-select__multi-value
-	.react-select__multi-value__remove {
+.react-select.success .react-select__multi-value .react-select__multi-value__remove {
 	color: #78b414;
 	border-left: 1px solid #78b414;
 }
-.react-select.success
-	.react-select__multi-value
-	.react-select__multi-value__remove:hover {
+.react-select.success .react-select__multi-value .react-select__multi-value__remove:hover {
 	color: #87cb16;
 	background-color: transparent;
 }
 
 .react-select.info .react-select__control.react-select__control--is-focused,
-.react-select.info
-	.react-select__control.react-select__control--is-focused:hover {
+.react-select.info .react-select__control.react-select__control--is-focused:hover {
 	border-color: #23ccef;
 }
 
@@ -15539,22 +15279,17 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 .react-select.info .react-select__multi-value {
 	border: 1px solid #23ccef;
 }
-.react-select.info
-	.react-select__multi-value
-	.react-select__multi-value__remove {
+.react-select.info .react-select__multi-value .react-select__multi-value__remove {
 	color: #11bfe3;
 	border-left: 1px solid #11bfe3;
 }
-.react-select.info
-	.react-select__multi-value
-	.react-select__multi-value__remove:hover {
+.react-select.info .react-select__multi-value .react-select__multi-value__remove:hover {
 	color: #23ccef;
 	background-color: transparent;
 }
 
 .react-select.warning .react-select__control.react-select__control--is-focused,
-.react-select.warning
-	.react-select__control.react-select__control--is-focused:hover {
+.react-select.warning .react-select__control.react-select__control--is-focused:hover {
 	border-color: #ffa534;
 }
 
@@ -15572,22 +15307,17 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 .react-select.warning .react-select__multi-value {
 	border: 1px solid #ffa534;
 }
-.react-select.warning
-	.react-select__multi-value
-	.react-select__multi-value__remove {
+.react-select.warning .react-select__multi-value .react-select__multi-value__remove {
 	color: #ff9510;
 	border-left: 1px solid #ff9510;
 }
-.react-select.warning
-	.react-select__multi-value
-	.react-select__multi-value__remove:hover {
+.react-select.warning .react-select__multi-value .react-select__multi-value__remove:hover {
 	color: #ffa534;
 	background-color: transparent;
 }
 
 .react-select.danger .react-select__control.react-select__control--is-focused,
-.react-select.danger
-	.react-select__control.react-select__control--is-focused:hover {
+.react-select.danger .react-select__control.react-select__control--is-focused:hover {
 	border-color: #fb404b;
 }
 
@@ -15605,15 +15335,11 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 .react-select.danger .react-select__multi-value {
 	border: 1px solid #fb404b;
 }
-.react-select.danger
-	.react-select__multi-value
-	.react-select__multi-value__remove {
+.react-select.danger .react-select__multi-value .react-select__multi-value__remove {
 	color: #fa1825;
 	border-left: 1px solid #fa1825;
 }
-.react-select.danger
-	.react-select__multi-value
-	.react-select__multi-value__remove:hover {
+.react-select.danger .react-select__multi-value .react-select__multi-value__remove:hover {
 	color: #fb404b;
 	background-color: transparent;
 }
@@ -15626,9 +15352,7 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 	color: #aaaaaa;
 	border-left: 1px solid #aaaaaa;
 }
-.react-select
-	.react-select__multi-value
-	.react-select__multi-value__remove:hover {
+.react-select .react-select__multi-value .react-select__multi-value__remove:hover {
 	color: #9a9a9a;
 	background-color: transparent;
 }
@@ -15759,10 +15483,7 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 	font-weight: 900;
 }
 
-.ReactTable
-	.rt-thead
-	.rt-th.-cursor-pointer.-sort-desc
-	> div:first-of-type:after {
+.ReactTable .rt-thead .rt-th.-cursor-pointer.-sort-desc > div:first-of-type:after {
 	content: '\F0DD';
 	top: -3px;
 	position: relative;
@@ -15774,10 +15495,7 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 	opacity: 0.8;
 }
 
-.ReactTable
-	.rt-thead
-	.rt-th.-cursor-pointer.-sort-asc
-	> div:first-of-type:after {
+.ReactTable .rt-thead .rt-th.-cursor-pointer.-sort-asc > div:first-of-type:after {
 	content: '\F0DE';
 	top: 3px;
 	position: relative;
@@ -16263,18 +15981,10 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 		color-stop(0%, #282828),
 		color-stop(100%, rgba(17, 17, 17, 0.7))
 	);
-	background: -webkit-linear-gradient(
-		top,
-		#282828 0%,
-		rgba(17, 17, 17, 0.7) 100%
-	);
+	background: -webkit-linear-gradient(top, #282828 0%, rgba(17, 17, 17, 0.7) 100%);
 	background: -o-linear-gradient(top, #282828 0%, rgba(17, 17, 17, 0.7) 100%);
 	background: -ms-linear-gradient(top, #282828 0%, rgba(17, 17, 17, 0.7) 100%);
-	background: linear-gradient(
-		to bottom,
-		#282828 0%,
-		rgba(17, 17, 17, 0.7) 100%
-	);
+	background: linear-gradient(to bottom, #282828 0%, rgba(17, 17, 17, 0.7) 100%);
 	background-size: 150% 150%;
 }
 
@@ -16359,9 +16069,7 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
 .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
 	transform: translateX(36px);
 }
-.custom-switch:hover
-	.custom-control-input:checked
-	~ .custom-control-label::after {
+.custom-switch:hover .custom-control-input:checked ~ .custom-control-label::after {
 	margin-left: -6px;
 }
 .custom-switch:hover .custom-control-label::after {

@@ -39,6 +39,6 @@ ReactDOM.render(
 				</ToastProvider>
 			</Switch>
 		</BrowserRouter>
-	</Provider>,	
-	document.getElementById('root')
+	</Provider>,
+	document.getElementById('root'),
 );

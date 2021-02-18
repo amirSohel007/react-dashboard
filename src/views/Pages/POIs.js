@@ -29,9 +29,7 @@ export const POIs = () => {
 		const res = await axios_auth.get('/services/services/api/users');
 		if (res.data) {
 			let usersList = [];
-			res.data.map((user) =>
-				usersList.push({ value: user.login, label: user.login })
-			);
+			res.data.map((user) => usersList.push({ value: user.login, label: user.login }));
 			setUsers(usersList);
 		}
 	};
@@ -40,9 +38,7 @@ export const POIs = () => {
 		const res = await axios_auth.get('/services/services/api/ese-wards');
 		if (res.data) {
 			let usersList = [];
-			res.data.map((user) =>
-				usersList.push({ value: user.id, label: user.wardDesc })
-			);
+			res.data.map((user) => usersList.push({ value: user.id, label: user.wardDesc }));
 			setWordDesc(usersList);
 		}
 	};
@@ -193,15 +189,9 @@ export const POIs = () => {
 			cellRendererFramework: function (params) {
 				return (
 					<span>
-						<i
-							className='fa fa-eye pr-4'
-							onClick={() => action(params.data)}
-						></i>
+						<i className='fa fa-eye pr-4' onClick={() => action(params.data)}></i>
 						<i className='fa fa-pen pr-4' onClick={() => action('edit')}></i>
-						<i
-							className='fa fa-trash pr-4'
-							onClick={() => action('delete')}
-						></i>
+						<i className='fa fa-trash pr-4' onClick={() => action('delete')}></i>
 					</span>
 				);
 			},
@@ -209,46 +199,43 @@ export const POIs = () => {
 	];
 
 	return (
-		<div
-			className='d-flex flex-column'
-			style={{ height: 'calc(100vh - 185px)' }}
-		>
+		<div className='d-flex flex-column' style={{ height: 'calc(100vh - 185px)' }}>
 			<Row>
 				<Col className='co-sm-3 form-group'>
-					<div className="d-flex align-items-center">
-					<label htmlFor="singleSelect" className="mb-0 mr-3">By Users</label>
-					<Select
-						className='react-select primary flex-fill'
-						classNamePrefix='react-select'
-						name='singleSelect'
-						value={singleSelect}
-						onChange={(value) => fetchUserSpecificPois(value)}
-						options={users}
-						placeholder='Single Select'
-					/>
+					<div className='d-flex align-items-center'>
+						<label htmlFor='singleSelect' className='mb-0 mr-3'>
+							By Users
+						</label>
+						<Select
+							className='react-select primary flex-fill'
+							classNamePrefix='react-select'
+							name='singleSelect'
+							value={singleSelect}
+							onChange={(value) => fetchUserSpecificPois(value)}
+							options={users}
+							placeholder='Single Select'
+						/>
 					</div>
 				</Col>
 
 				<Col className='co-sm-3 form-group'>
-					<div className="d-flex align-items-center">
-					<label htmlFor="wordDesc" className="mb-0 mr-3">By Id</label>
-					<Select
-						className='react-select primary flex-fill'
-						classNamePrefix='react-select'
-						name='wordDesc'
-						value={wordDesc}
-						onChange={(value) => setWordDesc(value)}
-						options={wordDesc}
-					/>
+					<div className='d-flex align-items-center'>
+						<label htmlFor='wordDesc' className='mb-0 mr-3'>
+							By Id
+						</label>
+						<Select
+							className='react-select primary flex-fill'
+							classNamePrefix='react-select'
+							name='wordDesc'
+							value={wordDesc}
+							onChange={(value) => setWordDesc(value)}
+							options={wordDesc}
+						/>
 					</div>
 				</Col>
 
-				<Col className='co-sm-3'>
-
-				</Col>
-				<Col className='co-sm-3'>
-
-				</Col>
+				<Col className='co-sm-3'></Col>
+				<Col className='co-sm-3'></Col>
 			</Row>
 			<div className='ag-theme-alpine' style={{ flex: 'auto', width: '100%' }}>
 				<AgGridReact
@@ -256,8 +243,7 @@ export const POIs = () => {
 					animateRows={true}
 					columnDefs={columnDefs}
 					rowData={poisData}
-					 paginationPageSize="60"
-				></AgGridReact>
+					paginationPageSize='60'></AgGridReact>
 			</div>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import { LOGGING_IN, LOGGED_IN, LOGIN_ERROR, LOGOUT } from '../actions/actionTypes';
+const key = 'login_state';
 
-const INITIAL_STATE = {
+const INITIAL_STATE = getOldState() || {
 	isLoggedIn: false,
 	isLoggingIn: false,
 	loginError: undefined,
@@ -9,24 +10,38 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
 	switch (action.type) {
 		case LOGGING_IN:
-			return { ...state, isLoggedIn: false, isLoggingIn: true };
+			return setLocalStorageAndReturn({ ...state, isLoggedIn: false, isLoggingIn: true });
 
 		case LOGGED_IN:
-			return { ...state, isLoggedIn: true, isLoggingIn: false };
+			return setLocalStorageAndReturn({ ...state, isLoggedIn: true, isLoggingIn: false });
 
 		case LOGIN_ERROR:
-			return {
+			return setLocalStorageAndReturn({
 				...state,
 				isLoggedIn: false,
 				isLoggingIn: false,
 				loginError: action.error,
-			};
+			});
 
 		case LOGOUT:
 			localStorage.clear();
-			return { ...state, isLoggedIn: false };
+			return setLocalStorageAndReturn({ ...state, isLoggedIn: false });
 
 		default:
 			return state;
 	}
+}
+
+function getOldState() {
+	const state = localStorage.getItem(key);
+	if (state) {
+		return JSON.parse(state);
+	} else {
+		return null;
+	}
+}
+
+function setLocalStorageAndReturn(updateState) {
+	localStorage.setItem(key, JSON.stringify(updateState));
+	return updateState;
 }

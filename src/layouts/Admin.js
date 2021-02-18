@@ -9,6 +9,7 @@ import AdminNavbar from 'components/Navbars/AdminNavbar.js';
 // core components
 import Sidebar from 'components/Sidebar/Sidebar.js';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 // dinamically create dashboard routes
 import routes from 'routes.js';
@@ -17,7 +18,7 @@ function Admin() {
 	const [sidebarImage, setSidebarImage] = React.useState(image3);
 	const [sidebarBackground, setSidebarBackground] = React.useState('black');
 	const [user, setUser] = useState();
-
+	const { isLoggedIn } = useSelector((state) => state.login);
 	// To get the user details..
 	const getUserDetails = async () => {
 		const res = await axios_auth.get('/services/services/api/account');
@@ -34,8 +35,10 @@ function Admin() {
 		}
 	};
 	useEffect(() => {
-		getUserDetails();
-	}, []);
+		if (isLoggedIn) {
+			getUserDetails();
+		}
+	}, [isLoggedIn]);
 
 	const getRoutes = (routes) => {
 		return routes.map((prop, key) => {

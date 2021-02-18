@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-let getLocalStroageToken = localStorage.getItem('token');
+let getLocalStroageToken = () => localStorage.getItem('token');
 
 const BASE_URL = 'http://3.12.23.25:9098';
 
@@ -14,7 +14,7 @@ export const axios_auth = Axios.create({
 	timeout: 0,
 	transformRequest: [
 		function (data, headers) {
-			headers['Authorization'] = `Bearer ${getLocalStroageToken}`;
+			headers['Authorization'] = `Bearer ${getLocalStroageToken()}`;
 			return JSON.stringify(data);
 		},
 	],

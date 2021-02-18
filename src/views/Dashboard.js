@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // react-bootstrap components
 import { Card, Col, Container, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { axios_auth } from '../api';
 
 function Dashboard() {
@@ -12,9 +13,13 @@ function Dashboard() {
 			setCount(res.data);
 		}
 	};
+	const { isLoggedIn } = useSelector((state) => state.login);
+
 	useEffect(() => {
-		getPoisCountHandler();
-	}, []);
+		if (isLoggedIn) {
+			getPoisCountHandler();
+		}
+	}, [isLoggedIn]);
 
 	return (
 		<>

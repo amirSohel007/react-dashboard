@@ -532,6 +532,7 @@
 
 body {
 	overflow-x: hidden;
+	font-family: 'Montserrat', sans-serif !important;
 }
 
 /* Scroll css */
@@ -556,4 +557,8 @@ body {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: #efefef;
+}
+
+.react-datepicker-wrapper {
+	flex: auto;
 }

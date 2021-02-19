@@ -108,7 +108,7 @@ function Sidebar({ routes, image, background, username }) {
 	};
 	return (
 		<>
-			<div className='sidebar' data-color={'orange' || background} data-image={image}>
+			<div className='sidebar' data-image={image}>
 				<div className='sidebar-wrapper'>
 					<div className='logo pl-3'>
 						<NavLink className='simple-text logo-normal' to='/admin/home'>

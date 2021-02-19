@@ -141,9 +141,8 @@
 			p {
 				margin: 0;
 				line-height: 30px;
-				font-size: 12px;
+				font-size: 14px;
 				font-weight: 600;
-				text-transform: uppercase;
 				white-space: nowrap;
 				position: relative;
 				color: #ffffff;
@@ -269,7 +268,7 @@
 				margin: 5px 15px 0px 10px;
 				opacity: 0.86;
 				border-radius: 4px;
-				text-transform: uppercase;
+
 				line-height: 30px;
 				font-size: 12px;
 				font-weight: 600;
@@ -282,12 +281,13 @@
 				}
 
 				i {
-					font-size: 28px;
+					font-size: 20px;
 					margin-right: 15px;
 					width: 30px;
 					text-align: center;
 					vertical-align: middle;
 					float: left;
+					margin-top: 4px;
 				}
 			}
 
@@ -691,16 +691,17 @@
 				position: relative;
 				right: 10px;
 				text-align: center;
+				margin-top: 4px;
 			}
 		}
 
 		.nav-item.active {
 			.nav-link {
-				background-color: rgba(255, 255, 255, 0.2) !important;
+				// background-color: rgba(255, 255, 255, 0.2) !important;
 			}
 		}
 		.nav-link:not(.btn):hover {
-			background-color: rgba(255, 255, 255, 0.2) !important;
+			// background-color: rgba(255, 255, 255, 0.2) !important;
 			border-radius: 0.1875rem;
 			@include transition(300ms, linear);
 		}
@@ -848,4 +849,12 @@
 .full-page[data-image]:after,
 .full-page.has-image:after {
 	opacity: 0.77;
+}
+
+.sidebar {
+	background-color: #2a3042;
+}
+
+.nc-icon::before {
+	font-weight: 600;
 }

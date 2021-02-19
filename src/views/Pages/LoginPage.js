@@ -50,15 +50,15 @@ function LoginPage(props) {
 									<Card.Body>
 										<Card.Body>
 											<Form.Group>
-												<label>Email address</label>
+												<label className='text-capitalize'>Email address</label>
 												<Form.Control
 													placeholder='Enter email'
 													type='text'
 													name='username'
 													ref={register({ required: true })}></Form.Control>
 											</Form.Group>
-											<Form.Group>
-												<label>Password</label>
+											<Form.Group className='mb-0'>
+												<label className='text-capitalize'>Password</label>
 												<Form.Control
 													placeholder='Password'
 													type='password'
@@ -75,7 +75,7 @@ function LoginPage(props) {
 										</Card.Body>
 									</Card.Body>
 									<Card.Footer className='ml-auto mr-auto'>
-										<Button className='btn-wd' type='submit' variant='warning'>
+										<Button className='btn-wd' type='submit' variant='primary'>
 											Login
 										</Button>
 									</Card.Footer>

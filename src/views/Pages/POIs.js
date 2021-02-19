@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+//CSV  import
+import { CSVLink } from 'react-csv';
 import DataTable, { defaultThemes } from 'react-data-table-component';
-import Select from 'react-select';
-import { axios_auth } from '../../api';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
-
-//CSV  import
-import { CSVLink, CSVDownload } from 'react-csv';
-
 import 'react-datepicker/dist/react-datepicker.css';
+import Select from 'react-select';
+import { axios_auth } from '../../api';
+
 const PoiBaseURL = '/services/services/api';
 
 const poiApiUrl = `${PoiBaseURL}/ese-pois`;
@@ -146,31 +145,16 @@ export const POIs = () => {
 	const [csv, setCsvData] = useState([]);
 	const countPerPage = 40;
 
-	// const csvData = [
-	// 	['firstname', 'lastname', 'email'],
-	// 	['Ahmed', 'Tomi', 'ah@smthing.co.com'],
-	// 	['Raed', 'Labes', 'rl@smthing.co.com'],
-	// 	['Yezzi', 'Min l3b', 'ymin@cocococo.com'],
-	// ];
-
 	// Fetach all Pois data without any specific filter
 	const fetchPoiData = async () => {
 		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
 			setPoisData(res.data);
-			console.log('print the data ===>', res.data);
 
-			let arr = res.data;
-
-			const csvHeading = Object.keys(arr[0]);
-
+			// transform data for exporting in CSV file
+			const csvHeading = Object.keys(res?.data[0]);
 			let csvDataArr = [];
 			csvDataArr.push(csvHeading);
-
-			arr.map((obj) => {
-				csvDataArr.push(Object.values(obj));
-			});
-
-			console.log('CSV data array', csvDataArr);
+			res?.data.map((obj) => csvDataArr.push(Object.values(obj)));
 			setCsvData(csvDataArr);
 		});
 	};
@@ -316,7 +300,11 @@ export const POIs = () => {
 					</div>
 				</Col>
 			</div>
-			<CSVLink data={csv}>Download CSV</CSVLink>
+			<div className='d-flex justify-content-end'>
+				<CSVLink className='export_csv' data={csv}>
+					Download CSV
+				</CSVLink>
+			</div>
 			<DataTable
 				columns={columns}
 				data={pois}

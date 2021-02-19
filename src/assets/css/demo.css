@@ -562,3 +562,13 @@ body {
 .react-datepicker-wrapper {
 	flex: auto;
 }
+
+.export_csv {
+	text-align: right;
+	padding: 6px 10px;
+	display: inline-block;
+	background: #1c212d;
+	border-radius: 3px;
+	color: #fff;
+	margin-bottom: 13px;
+}

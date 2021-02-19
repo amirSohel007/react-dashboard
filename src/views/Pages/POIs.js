@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+//CSV  import
+import { CSVLink } from 'react-csv';
 import DataTable, { defaultThemes } from 'react-data-table-component';
-import Select from 'react-select';
-import { axios_auth } from '../../api';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Select from 'react-select';
+import { axios_auth } from '../../api';
+
 const PoiBaseURL = '/services/services/api';
 
 const poiApiUrl = `${PoiBaseURL}/ese-pois`;
@@ -139,12 +142,20 @@ export const POIs = () => {
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
 	const [startDate, setStartDate] = useState();
+	const [csv, setCsvData] = useState([]);
 	const countPerPage = 40;
 
 	// Fetach all Pois data without any specific filter
 	const fetchPoiData = async () => {
 		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
 			setPoisData(res.data);
+
+			// transform data for exporting in CSV file
+			const csvHeading = Object.keys(res?.data[0]);
+			let csvDataArr = [];
+			csvDataArr.push(csvHeading);
+			res?.data.map((obj) => csvDataArr.push(Object.values(obj)));
+			setCsvData(csvDataArr);
 		});
 	};
 
@@ -184,7 +195,8 @@ export const POIs = () => {
 	};
 
 	useEffect(() => {
-		console.log(startDate);
+		// console.log(startDate);
+		console.log(pois);
 	}, [startDate]);
 
 	useEffect(() => {
@@ -287,6 +299,11 @@ export const POIs = () => {
 						/>
 					</div>
 				</Col>
+			</div>
+			<div className='d-flex justify-content-end'>
+				<CSVLink className='export_csv' data={csv}>
+					Download CSV
+				</CSVLink>
 			</div>
 			<DataTable
 				columns={columns}

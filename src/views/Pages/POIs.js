@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import DataTable from 'react-data-table-component';
+import DataTable, { defaultThemes } from 'react-data-table-component';
 import Select from 'react-select';
 import { axios_auth } from '../../api';
 
-const poiApiUrl = '/services/services/api/ese-pois';
-const userApiUrl = '/services/services/api/users';
-const wardsApiUrl = '/services/services/api/ese-wards';
+const PoiBaseURL = '/services/services/api';
+
+const poiApiUrl = `${PoiBaseURL}/ese-pois`;
+const userApiUrl = `${PoiBaseURL}/users`;
+const wardsApiUrl = `${PoiBaseURL}/ese-wards`;
 
 const columns = [
 	{
@@ -18,7 +20,7 @@ const columns = [
 	{
 		name: 'Holding Number',
 		selector: 'holdingNo',
-		width: '120px',
+		width: '200px',
 		sortable: true,
 	},
 	{
@@ -36,6 +38,7 @@ const columns = [
 		name: 'Guardian Name',
 		selector: 'guardianName',
 		sortable: true,
+		width: '180px',
 	},
 	{
 		name: 'Address 1',
@@ -133,12 +136,33 @@ export const POIs = () => {
 	const [selectedWard, setSelectedWard] = React.useState(null);
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
-	const countPerPage = 20;
+	const countPerPage = 40;
 
+	// Fetach all Pois data without any specific filter
 	const fetchPoiData = async () => {
 		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
 			setPoisData(res.data);
 		});
+	};
+
+	// Fetach all users for dropdown
+	const getUsers = async () => {
+		const res = await axios_auth.get(userApiUrl);
+		if (res.data) {
+			let usersList = [];
+			res.data.map((user) => usersList.push({ value: user.login, label: user.login }));
+			setUsers(usersList);
+		}
+	};
+
+	// Fetch all wards number for dropdown
+	const getWards = async () => {
+		const res = await axios_auth.get(wardsApiUrl);
+		if (res.data) {
+			let usersList = [];
+			res.data.map((user) => usersList.push({ value: user.id, label: user.wardDesc }));
+			setWards(usersList);
+		}
 	};
 
 	const fetchPoiTotalCount = async () => {
@@ -154,26 +178,6 @@ export const POIs = () => {
 		if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
 		params += `page=${page}&size=${countPerPage}&sort=${sort}`;
 		return params;
-	};
-
-	// GET POIs Users
-	const getUsers = async () => {
-		const res = await axios_auth.get(userApiUrl);
-		if (res.data) {
-			let usersList = [];
-			res.data.map((user) => usersList.push({ value: user.login, label: user.login }));
-			setUsers(usersList);
-		}
-	};
-
-	// GET ALL WARDS
-	const getWards = async () => {
-		const res = await axios_auth.get(wardsApiUrl);
-		if (res.data) {
-			let usersList = [];
-			res.data.map((user) => usersList.push({ value: user.id, label: user.wardDesc }));
-			setWards(usersList);
-		}
 	};
 
 	useEffect(() => {
@@ -202,30 +206,33 @@ export const POIs = () => {
 	};
 
 	const customStyles = {
-		rows: {
+		header: {
 			style: {
-				maxHeight: '45px',
-				minHeight: '35px', // override the row height
+				minHeight: '56px',
+			},
+		},
+		headRow: {
+			style: {
+				borderTopStyle: 'solid',
+				borderTopWidth: '1px',
+				borderTopColor: defaultThemes.default.divider.default,
 			},
 		},
 		headCells: {
 			style: {
-				paddingLeft: '8px', // override the cell padding for head cells
-				paddingRight: '8px',
-				width: '200px',
-			},
-		},
-		cells: {
-			style: {
-				paddingLeft: '8px', // override the cell padding for data cells
-				paddingRight: '8px',
+				'&:not(:last-of-type)': {
+					borderRightStyle: 'solid',
+					borderRightWidth: '1px',
+					borderRightColor: defaultThemes.default.divider.default,
+					fontSize: 13,
+				},
 			},
 		},
 	};
 
 	return (
 		<div className='d-flex flex-column' style={{ height: 'calc(100vh - 185px)' }}>
-			<Row>
+			<div className='row'>
 				<Col className='co-sm-3 form-group'>
 					<div className='d-flex align-items-center'>
 						<label htmlFor='selectedUser' className='mb-0 mr-3'>
@@ -261,25 +268,27 @@ export const POIs = () => {
 
 				<Col className='co-sm-3'></Col>
 				<Col className='co-sm-3'></Col>
-				<DataTable
-					columns={columns}
-					data={pois}
-					highlightOnHover
-					fixedHeader={true}
-					customStyles={customStyles}
-					pagination
-					paginationServer
-					paginationTotalRows={totalCount - 1}
-					paginationResetDefaultPage={true}
-					paginationPerPage={countPerPage}
-					paginationComponentOptions={{
-						noRowsPerPage: true,
-					}}
-					onChangePage={(page) => setPage(page)}
-					// sortServer={true}
-					onSort={onSort}
-				/>
-			</Row>
+			</div>
+			<DataTable
+				columns={columns}
+				data={pois}
+				striped={true}
+				dense={false}
+				highlightOnHover
+				fixedHeader={true}
+				customStyles={customStyles}
+				pagination
+				paginationServer
+				paginationTotalRows={totalCount - 1}
+				paginationResetDefaultPage={true}
+				paginationPerPage={countPerPage}
+				paginationComponentOptions={{
+					noRowsPerPage: true,
+				}}
+				onChangePage={(page) => setPage(page)}
+				// sortServer={true}
+				onSort={onSort}
+			/>
 		</div>
 	);
 };

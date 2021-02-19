@@ -143,20 +143,35 @@ export const POIs = () => {
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
 	const [startDate, setStartDate] = useState();
+	const [csv, setCsvData] = useState([]);
 	const countPerPage = 40;
 
-	const csvData = [
-		['firstname', 'lastname', 'email'],
-		['Ahmed', 'Tomi', 'ah@smthing.co.com'],
-		['Raed', 'Labes', 'rl@smthing.co.com'],
-		['Yezzi', 'Min l3b', 'ymin@cocococo.com'],
-	];
+	// const csvData = [
+	// 	['firstname', 'lastname', 'email'],
+	// 	['Ahmed', 'Tomi', 'ah@smthing.co.com'],
+	// 	['Raed', 'Labes', 'rl@smthing.co.com'],
+	// 	['Yezzi', 'Min l3b', 'ymin@cocococo.com'],
+	// ];
 
 	// Fetach all Pois data without any specific filter
 	const fetchPoiData = async () => {
 		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
 			setPoisData(res.data);
 			console.log('print the data ===>', res.data);
+
+			let arr = res.data;
+
+			const csvHeading = Object.keys(arr[0]);
+
+			let csvDataArr = [];
+			csvDataArr.push(csvHeading);
+
+			arr.map((obj) => {
+				csvDataArr.push(Object.values(obj));
+			});
+
+			console.log('CSV data array', csvDataArr);
+			setCsvData(csvDataArr);
 		});
 	};
 
@@ -301,7 +316,7 @@ export const POIs = () => {
 					</div>
 				</Col>
 			</div>
-			<CSVLink data={csvData}>Download me</CSVLink>;
+			<CSVLink data={csv}>Download CSV</CSVLink>
 			<DataTable
 				columns={columns}
 				data={pois}

@@ -149,13 +149,6 @@ export const POIs = () => {
 	const fetchPoiData = async () => {
 		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
 			setPoisData(res.data);
-
-			// transform data for exporting in CSV file
-			const csvHeading = Object.keys(res?.data[0]);
-			let csvDataArr = [];
-			csvDataArr.push(csvHeading);
-			res?.data.map((obj) => csvDataArr.push(Object.values(obj)));
-			setCsvData(csvDataArr);
 		});
 	};
 
@@ -181,8 +174,8 @@ export const POIs = () => {
 
 	const fetchPoiTotalCount = async () => {
 		axios_auth.get(poiApiUrl + `/count` + createQueryParams()).then((res) => {
-			console.log(res);
 			setTotalCount(res.data);
+			downloadCSV();
 		});
 	};
 
@@ -192,6 +185,17 @@ export const POIs = () => {
 		if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
 		params += `page=${page}&size=${countPerPage}&sort=${sort}`;
 		return params;
+	};
+
+	// transform data for exporting in CSV file
+	const downloadCSV = async () => {
+		const res = await axios_auth.get(`${poiApiUrl}?size=914`);
+		if (res.data?.length > 1) {
+			const csvHeading = Object.keys(res?.data[0]);
+			let csvDataArr = [];
+			res?.data.map((obj) => csvDataArr.push([...csvHeading, Object.values(obj)]));
+			setCsvData(csvDataArr);
+		}
 	};
 
 	useEffect(() => {
@@ -207,17 +211,14 @@ export const POIs = () => {
 	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
 	useEffect(() => {
 		setPage(1);
+		fetchPoiData();
+		fetchPoiTotalCount();
 	}, [selectedWard, selectedUser]);
 
 	useEffect(async () => {
-		await fetchPoiData();
-		fetchPoiTotalCount();
-	}, [page]);
-
-	useEffect(() => {
 		fetchPoiTotalCount();
 		fetchPoiData();
-	}, [sort]);
+	}, [page, sort]);
 
 	const onSort = (column, sortDirection, event) => {
 		console.log(column, sortDirection, event);

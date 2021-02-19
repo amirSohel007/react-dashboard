@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+//CSV  import
+import { CSVLink } from 'react-csv';
 import DataTable, { defaultThemes } from 'react-data-table-component';
-import Select from 'react-select';
-import { axios_auth } from '../../api';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Select from 'react-select';
+import { axios_auth } from '../../api';
+
 const PoiBaseURL = '/services/services/api';
 
 const poiApiUrl = `${PoiBaseURL}/ese-pois`;
@@ -156,14 +159,15 @@ export const POIs = () => {
 	const [wards, setWards] = useState([]);
 	const [startDate, setStartDate] = useState();
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
-	const countPerPage = 20;
 	const defaultPage = 1;
+	const [csv, setCsvData] = useState([]);
+	const countPerPage = 40;
 
 	//Fetch pois count and data with respective filters and pagination
 	const fetchPoiData = async () => {
 		let queryParams = await createQueryParams();
-		fetchPoiTotalCount(queryParams).then((res) => {
-			setTotalCount(res);
+		fetchPoiTotalCount(queryParams).then((count) => {
+			setTotalCount(count);
 			axios_auth.get(poiApiUrl + queryParams).then((resp) => {
 				setPoisData(resp.data);
 			});
@@ -180,6 +184,18 @@ export const POIs = () => {
 		}
 	};
 
+	// transform data for exporting in CSV file
+	const downloadCSV = () => {
+		axios_auth.get(`${poiApiUrl}?size=914`).then((res) => {
+			if (res.data?.length > 1) {
+				const csvHeading = Object.keys(res?.data[0]);
+				let csvDataArr = [];
+				res?.data.map((obj) => csvDataArr.push([...csvHeading, Object.values(obj)]));
+				setCsvData(csvDataArr);
+			}
+		});
+	};
+
 	// Fetch all wards number for dropdown
 	const getWards = async () => {
 		const res = await axios_auth.get(wardsApiUrl);
@@ -193,7 +209,6 @@ export const POIs = () => {
 	const fetchPoiTotalCount = async (queryParams) => {
 		return new Promise((resolve, reject) => {
 			axios_auth.get(poiApiUrl + `/count` + queryParams).then((res) => {
-				console.log(res);
 				resolve(res.data);
 			});
 		});
@@ -220,6 +235,7 @@ export const POIs = () => {
 	useEffect(() => {
 		getUsers();
 		getWards();
+		downloadCSV();
 	}, []);
 
 	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
@@ -315,6 +331,15 @@ export const POIs = () => {
 					</div>
 				</Col>
 			</div>
+
+			<div className='d-flex justify-content-end'>
+				{csv && csv.length > 0 && (
+					<CSVLink className='export_csv' data={csv}>
+						Download CSV
+					</CSVLink>
+				)}
+			</div>
+
 			<DataTable
 				columns={columns}
 				data={pois}

@@ -3,7 +3,9 @@ import { Col, Row } from 'react-bootstrap';
 import DataTable, { defaultThemes } from 'react-data-table-component';
 import Select from 'react-select';
 import { axios_auth } from '../../api';
-
+// react plugin used to create datetimepicker
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 const PoiBaseURL = '/services/services/api';
 
 const poiApiUrl = `${PoiBaseURL}/ese-pois`;
@@ -136,6 +138,7 @@ export const POIs = () => {
 	const [selectedWard, setSelectedWard] = React.useState(null);
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
+	const [startDate, setStartDate] = useState();
 	const countPerPage = 40;
 
 	// Fetach all Pois data without any specific filter
@@ -179,6 +182,10 @@ export const POIs = () => {
 		params += `page=${page}&size=${countPerPage}&sort=${sort}`;
 		return params;
 	};
+
+	useEffect(() => {
+		console.log(startDate);
+	}, [startDate]);
 
 	useEffect(() => {
 		getUsers();
@@ -266,8 +273,20 @@ export const POIs = () => {
 					</div>
 				</Col>
 
-				<Col className='co-sm-3'></Col>
-				<Col className='co-sm-3'></Col>
+				<Col className='co-sm-3'>
+					<div className='d-flex align-items-center form-group'>
+						<label htmlFor='data' className='mb-0 mr-3'>
+							By Date
+						</label>
+						<DatePicker
+							className='form-control'
+							selected={startDate}
+							onChange={(date) => setStartDate(date)}
+							isClearable
+							placeholderText='Select date'
+						/>
+					</div>
+				</Col>
 			</div>
 			<DataTable
 				columns={columns}

@@ -134,7 +134,7 @@ const columns = [
 		selector: 'esePoiPropertyUsageTypePropertyUsageTypeName',
 		sortable: true,
 	},
-	{
+	{ 
 		name: 'Actions',
 		cell: (row, index, column, id) => {
 			return (
@@ -159,17 +159,20 @@ export const POIs = () => {
 	const [wards, setWards] = useState([]);
 	const [startDate, setStartDate] = useState();
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+	const [isLoading, setLoading] = useState(false);
 	const defaultPage = 1;
 	const [csv, setCsvData] = useState([]);
 	const countPerPage = 40;
 
 	//Fetch pois count and data with respective filters and pagination
 	const fetchPoiData = async () => {
+		setLoading(true);
 		let queryParams = await createQueryParams();
 		fetchPoiTotalCount(queryParams).then((count) => {
 			setTotalCount(count);
 			axios_auth.get(poiApiUrl + queryParams).then((resp) => {
 				setPoisData(resp.data);
+				setLoading(false);
 			});
 		});
 	};
@@ -350,6 +353,7 @@ export const POIs = () => {
 				customStyles={customStyles}
 				pagination
 				paginationServer
+				progressPending={isLoading}
 				paginationTotalRows={totalCount - 1}
 				paginationResetDefaultPage={resetPaginationToggle}
 				paginationPerPage={countPerPage}

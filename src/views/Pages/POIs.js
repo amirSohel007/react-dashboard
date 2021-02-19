@@ -15,6 +15,10 @@ const poiApiUrl = `${PoiBaseURL}/ese-pois`;
 const userApiUrl = `${PoiBaseURL}/users`;
 const wardsApiUrl = `${PoiBaseURL}/ese-wards?size=55`;
 
+const actionClicked = (e) => {
+	console.log(e);
+};
+
 const columns = [
 	{
 		name: 'ID',
@@ -130,6 +134,18 @@ const columns = [
 		selector: 'esePoiPropertyUsageTypePropertyUsageTypeName',
 		sortable: true,
 	},
+	{
+		name: 'Actions',
+		cell: (row, index, column, id) => {
+			return (
+				<span>
+					<i className='fa fa-eye pr-4' onClick={() => actionClicked('view')}></i>
+					<i className='fa fa-pen pr-4' onClick={() => actionClicked('edit')}></i>
+					<i className='fa fa-trash pr-4' onClick={() => actionClicked('delete')}></i>
+				</span>
+			);
+		},
+	},
 ];
 
 export const POIs = () => {
@@ -142,20 +158,19 @@ export const POIs = () => {
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
 	const [startDate, setStartDate] = useState();
+	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+	const defaultPage = 1;
 	const [csv, setCsvData] = useState([]);
 	const countPerPage = 40;
 
-	// Fetach all Pois data without any specific filter
+	//Fetch pois count and data with respective filters and pagination
 	const fetchPoiData = async () => {
-		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
-			setPoisData(res.data);
-
-			// transform data for exporting in CSV file
-			const csvHeading = Object.keys(res?.data[0]);
-			let csvDataArr = [];
-			csvDataArr.push(csvHeading);
-			res?.data.map((obj) => csvDataArr.push(Object.values(obj)));
-			setCsvData(csvDataArr);
+		let queryParams = await createQueryParams();
+		fetchPoiTotalCount(queryParams).then((count) => {
+			setTotalCount(count);
+			axios_auth.get(poiApiUrl + queryParams).then((resp) => {
+				setPoisData(resp.data);
+			});
 		});
 	};
 
@@ -169,6 +184,18 @@ export const POIs = () => {
 		}
 	};
 
+	// transform data for exporting in CSV file
+	const downloadCSV = () => {
+		axios_auth.get(`${poiApiUrl}?size=914`).then((res) => {
+			if (res.data?.length > 1) {
+				const csvHeading = Object.keys(res?.data[0]);
+				let csvDataArr = [];
+				res?.data.map((obj) => csvDataArr.push([...csvHeading, Object.values(obj)]));
+				setCsvData(csvDataArr);
+			}
+		});
+	};
+
 	// Fetch all wards number for dropdown
 	const getWards = async () => {
 		const res = await axios_auth.get(wardsApiUrl);
@@ -179,56 +206,50 @@ export const POIs = () => {
 		}
 	};
 
-	const fetchPoiTotalCount = async () => {
-		axios_auth.get(poiApiUrl + `/count` + createQueryParams()).then((res) => {
-			setTotalCount(res.data);
-			downloadCSV();
+	const fetchPoiTotalCount = async (queryParams) => {
+		return new Promise((resolve, reject) => {
+			axios_auth.get(poiApiUrl + `/count` + queryParams).then((res) => {
+				resolve(res.data);
+			});
 		});
 	};
 
-	const createQueryParams = () => {
-		let params = '?';
-		if (selectedUser && selectedUser.value) params += `createdBy.equals=${selectedUser.value}&`;
-		if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
-		params += `page=${page}&size=${countPerPage}&sort=${sort}`;
-		return params;
-	};
-
-	// transform data for exporting in CSV file
-	const downloadCSV = async () => {
-		const res = await axios_auth.get(`${poiApiUrl}?size=914`);
-		if (res.data?.length > 1) {
-			const csvHeading = Object.keys(res?.data[0]);
-			let csvDataArr = [];
-			res?.data.map((obj) => csvDataArr.push([...csvHeading, Object.values(obj)]));
-			setCsvData(csvDataArr);
-		}
+	const createQueryParams = async () => {
+		return new Promise((resolve, reject) => {
+			let params = '?';
+			if (selectedUser && selectedUser.value) params += `createdBy.equals=${selectedUser.value}&`;
+			if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
+			params += `page=${page}&size=${countPerPage}&sort=${sort}`;
+			resolve(params);
+		});
 	};
 
 	useEffect(() => {
-		// console.log(startDate);
-		console.log(pois);
+		fetchPoiData();
+	}, [resetPaginationToggle]);
+
+	useEffect(() => {
+		console.log(startDate);
 	}, [startDate]);
 
 	useEffect(() => {
 		getUsers();
 		getWards();
+		downloadCSV();
 	}, []);
 
 	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
 	useEffect(() => {
-		setPage(1);
-		fetchPoiData();
-		fetchPoiTotalCount();
+		setPage(defaultPage);
+		setResetPaginationToggle(!resetPaginationToggle); // reseting pagination current page to 1
 	}, [selectedWard, selectedUser]);
 
-	useEffect(async () => {
-		fetchPoiTotalCount();
+	// re fetching data whenever page or sort changes
+	useEffect(() => {
 		fetchPoiData();
 	}, [page, sort]);
 
 	const onSort = (column, sortDirection, event) => {
-		console.log(column, sortDirection, event);
 		setSort(column.selector + ',' + sortDirection);
 	};
 
@@ -270,6 +291,7 @@ export const POIs = () => {
 							classNamePrefix='react-select'
 							name='selectedUser'
 							value={selectedUser}
+							isClearable={true}
 							onChange={(value) => setSelectedUser(value)}
 							options={users}
 							placeholder='Single Select'
@@ -286,6 +308,7 @@ export const POIs = () => {
 							className='react-select primary flex-fill'
 							classNamePrefix='react-select'
 							name='wards'
+							isClearable={true}
 							value={selectedWard}
 							onChange={(value) => setSelectedWard(value)}
 							options={wards}
@@ -308,11 +331,15 @@ export const POIs = () => {
 					</div>
 				</Col>
 			</div>
+
 			<div className='d-flex justify-content-end'>
-				<CSVLink className='export_csv' data={csv}>
-					Download CSV
-				</CSVLink>
+				{csv && csv.length > 0 && (
+					<CSVLink className='export_csv' data={csv}>
+						Download CSV
+					</CSVLink>
+				)}
 			</div>
+
 			<DataTable
 				columns={columns}
 				data={pois}
@@ -324,13 +351,12 @@ export const POIs = () => {
 				pagination
 				paginationServer
 				paginationTotalRows={totalCount - 1}
-				paginationResetDefaultPage={true}
+				paginationResetDefaultPage={resetPaginationToggle}
 				paginationPerPage={countPerPage}
 				paginationComponentOptions={{
 					noRowsPerPage: true,
 				}}
 				onChangePage={(page) => setPage(page)}
-				// sortServer={true}
 				onSort={onSort}
 			/>
 		</div>

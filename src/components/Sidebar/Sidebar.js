@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // react-bootstrap components
@@ -111,10 +111,10 @@ function Sidebar({ routes, image, background, username }) {
 			<div className='sidebar' data-color={'orange' || background} data-image={image}>
 				<div className='sidebar-wrapper'>
 					<div className='logo pl-3'>
-						<a className='simple-text logo-normal' href='http://www.creative-tim.com'>
+						<NavLink className='simple-text logo-normal' to='/admin/home'>
 							{' '}
 							Ecosense Enviro
-						</a>
+						</NavLink>
 					</div>
 					<div className='user'>
 						<div className='photo'>

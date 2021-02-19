@@ -8,7 +8,7 @@ const PoiBaseURL = '/services/services/api';
 
 const poiApiUrl = `${PoiBaseURL}/ese-pois`;
 const userApiUrl = `${PoiBaseURL}/users`;
-const wardsApiUrl = `${PoiBaseURL}/ese-wards`;
+const wardsApiUrl = `${PoiBaseURL}/ese-wards?size=55`;
 
 const columns = [
 	{

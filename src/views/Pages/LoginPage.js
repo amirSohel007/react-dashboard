@@ -45,7 +45,7 @@ function LoginPage(props) {
 							<Form action='' className='form' onSubmit={handleSubmit(props.login)}>
 								<Card className={'card-login ' + cardClasses}>
 									<Card.Header>
-										<h3 className='header text-center'>Login</h3>
+										<h3 className='header mb-0 mt-0 pl-3 '>Login</h3>
 									</Card.Header>
 									<Card.Body>
 										<Card.Body>
@@ -65,13 +65,13 @@ function LoginPage(props) {
 													name='password'
 													ref={register({ required: true })}></Form.Control>
 											</Form.Group>
-											<Form.Check className='pl-0'>
+											{/* <Form.Check className='pl-0'>
 												<Form.Check.Label>
 													<Form.Check.Input defaultChecked type='checkbox'></Form.Check.Input>
 													<span className='form-check-sign'></span>
 													Subscribe to newsletter
 												</Form.Check.Label>
-											</Form.Check>
+											</Form.Check> */}
 										</Card.Body>
 									</Card.Body>
 									<Card.Footer className='ml-auto mr-auto'>

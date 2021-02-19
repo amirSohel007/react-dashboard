@@ -12,6 +12,10 @@ const poiApiUrl = `${PoiBaseURL}/ese-pois`;
 const userApiUrl = `${PoiBaseURL}/users`;
 const wardsApiUrl = `${PoiBaseURL}/ese-wards?size=55`;
 
+const actionClicked = (e) => {
+	console.log(e);
+};
+
 const columns = [
 	{
 		name: 'ID',
@@ -127,6 +131,18 @@ const columns = [
 		selector: 'esePoiPropertyUsageTypePropertyUsageTypeName',
 		sortable: true,
 	},
+	{
+		name: 'Actions',
+		cell: (row, index, column, id) => {
+			return (
+				<span>
+					<i className='fa fa-eye pr-4' onClick={() => actionClicked('view')}></i>
+					<i className='fa fa-pen pr-4' onClick={() => actionClicked('edit')}></i>
+					<i className='fa fa-trash pr-4' onClick={() => actionClicked('delete')}></i>
+				</span>
+			);
+		},
+	},
 ];
 
 export const POIs = () => {
@@ -139,12 +155,18 @@ export const POIs = () => {
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
 	const [startDate, setStartDate] = useState();
-	const countPerPage = 40;
+	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+	const countPerPage = 20;
+	const defaultPage = 1;
 
-	// Fetach all Pois data without any specific filter
+	//Fetch pois count and data with respective filters and pagination
 	const fetchPoiData = async () => {
-		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
-			setPoisData(res.data);
+		let queryParams = await createQueryParams();
+		fetchPoiTotalCount(queryParams).then((res) => {
+			setTotalCount(res);
+			axios_auth.get(poiApiUrl + queryParams).then((resp) => {
+				setPoisData(resp.data);
+			});
 		});
 	};
 
@@ -168,20 +190,28 @@ export const POIs = () => {
 		}
 	};
 
-	const fetchPoiTotalCount = async () => {
-		axios_auth.get(poiApiUrl + `/count` + createQueryParams()).then((res) => {
-			console.log(res);
-			setTotalCount(res.data);
+	const fetchPoiTotalCount = async (queryParams) => {
+		return new Promise((resolve, reject) => {
+			axios_auth.get(poiApiUrl + `/count` + queryParams).then((res) => {
+				console.log(res);
+				resolve(res.data);
+			});
 		});
 	};
 
-	const createQueryParams = () => {
-		let params = '?';
-		if (selectedUser && selectedUser.value) params += `createdBy.equals=${selectedUser.value}&`;
-		if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
-		params += `page=${page}&size=${countPerPage}&sort=${sort}`;
-		return params;
+	const createQueryParams = async () => {
+		return new Promise((resolve, reject) => {
+			let params = '?';
+			if (selectedUser && selectedUser.value) params += `createdBy.equals=${selectedUser.value}&`;
+			if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
+			params += `page=${page}&size=${countPerPage}&sort=${sort}`;
+			resolve(params);
+		});
 	};
+
+	useEffect(() => {
+		fetchPoiData();
+	}, [resetPaginationToggle]);
 
 	useEffect(() => {
 		console.log(startDate);
@@ -194,21 +224,16 @@ export const POIs = () => {
 
 	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
 	useEffect(() => {
-		setPage(1);
+		setPage(defaultPage);
+		setResetPaginationToggle(!resetPaginationToggle); // reseting pagination current page to 1
 	}, [selectedWard, selectedUser]);
 
-	useEffect(async () => {
-		await fetchPoiData();
-		fetchPoiTotalCount();
-	}, [page]);
-
+	// re fetching data whenever page or sort changes
 	useEffect(() => {
-		fetchPoiTotalCount();
 		fetchPoiData();
-	}, [sort]);
+	}, [page, sort]);
 
 	const onSort = (column, sortDirection, event) => {
-		console.log(column, sortDirection, event);
 		setSort(column.selector + ',' + sortDirection);
 	};
 
@@ -250,6 +275,7 @@ export const POIs = () => {
 							classNamePrefix='react-select'
 							name='selectedUser'
 							value={selectedUser}
+							isClearable={true}
 							onChange={(value) => setSelectedUser(value)}
 							options={users}
 							placeholder='Single Select'
@@ -266,6 +292,7 @@ export const POIs = () => {
 							className='react-select primary flex-fill'
 							classNamePrefix='react-select'
 							name='wards'
+							isClearable={true}
 							value={selectedWard}
 							onChange={(value) => setSelectedWard(value)}
 							options={wards}
@@ -299,13 +326,12 @@ export const POIs = () => {
 				pagination
 				paginationServer
 				paginationTotalRows={totalCount - 1}
-				paginationResetDefaultPage={true}
+				paginationResetDefaultPage={resetPaginationToggle}
 				paginationPerPage={countPerPage}
 				paginationComponentOptions={{
 					noRowsPerPage: true,
 				}}
 				onChangePage={(page) => setPage(page)}
-				// sortServer={true}
 				onSort={onSort}
 			/>
 		</div>

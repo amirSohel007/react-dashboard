@@ -17,7 +17,7 @@ function FixedPlugin({
 	const [sidebarImage, setSidebarImage] = React.useState(sidebarDefaultImage);
 	return (
 		<>
-			<div className='fixed-plugin'>
+			{/* <div className='fixed-plugin'>
 				<Dropdown className='show-dropdown'>
 					<Dropdown.Toggle>
 						<i className='fas fa-cogs fa-2x'></i>
@@ -130,7 +130,8 @@ function FixedPlugin({
 						</li>
 					</Dropdown.Menu>
 				</Dropdown>
-			</div>
+			</div> */}
+			null
 		</>
 	);
 }

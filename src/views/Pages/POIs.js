@@ -5,6 +5,10 @@ import Select from 'react-select';
 import { axios_auth } from '../../api';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
+
+//CSV  import
+import { CSVLink, CSVDownload } from 'react-csv';
+
 import 'react-datepicker/dist/react-datepicker.css';
 const PoiBaseURL = '/services/services/api';
 
@@ -141,10 +145,18 @@ export const POIs = () => {
 	const [startDate, setStartDate] = useState();
 	const countPerPage = 40;
 
+	const csvData = [
+		['firstname', 'lastname', 'email'],
+		['Ahmed', 'Tomi', 'ah@smthing.co.com'],
+		['Raed', 'Labes', 'rl@smthing.co.com'],
+		['Yezzi', 'Min l3b', 'ymin@cocococo.com'],
+	];
+
 	// Fetach all Pois data without any specific filter
 	const fetchPoiData = async () => {
 		axios_auth.get(poiApiUrl + createQueryParams()).then((res) => {
 			setPoisData(res.data);
+			console.log('print the data ===>', res.data);
 		});
 	};
 
@@ -184,7 +196,8 @@ export const POIs = () => {
 	};
 
 	useEffect(() => {
-		console.log(startDate);
+		// console.log(startDate);
+		console.log(pois);
 	}, [startDate]);
 
 	useEffect(() => {
@@ -288,6 +301,7 @@ export const POIs = () => {
 					</div>
 				</Col>
 			</div>
+			<CSVLink data={csvData}>Download me</CSVLink>;
 			<DataTable
 				columns={columns}
 				data={pois}

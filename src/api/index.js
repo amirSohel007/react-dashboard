@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 let getLocalStroageToken = () => localStorage.getItem('token');
 
-const BASE_URL = 'http://3.12.23.25:9098';
+const BASE_URL = 'https://api.ecosense-enviro.com';
 
 export const no_auth_axios = Axios.create({
 	baseURL: BASE_URL,

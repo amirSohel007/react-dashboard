@@ -3,7 +3,12 @@ import { Col } from 'react-bootstrap';
 
 //CSV  import
 import { CSVLink } from 'react-csv';
-import { customStyles, basicsColumn } from '../Pages-util/POIs-util';
+import {
+	customStyles,
+	basicsColumn,
+	dateConvertor,
+	csvDataTransform,
+} from '../Pages-util/POIs-util';
 import DataTable from 'react-data-table-component';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
@@ -61,8 +66,10 @@ export const POIs = () => {
 		let queryParams = await createQueryParams();
 		fetchPoiTotalCount(queryParams).then((count) => {
 			setTotalCount(count);
-			axios_auth.get(poiApiUrl + queryParams).then((resp) => {
-				setPoisData(resp.data);
+			axios_auth.get(poiApiUrl + queryParams).then((res) => {
+				setPoisData(res.data);
+				let filterdPoisData = csvDataTransform(res?.data);
+				setCsvData(filterdPoisData);
 				setLoading(false);
 			});
 		});
@@ -81,11 +88,9 @@ export const POIs = () => {
 	// DOWNLOAD CSV  FILE
 	const downloadCSV = () => {
 		axios_auth.get(`${poiApiUrl}?size=914`).then((res) => {
-			if (res.data?.length > 1) {
-				const csvHeading = Object.keys(res?.data[0]);
-				let csvDataArr = [];
-				res?.data.map((obj) => csvDataArr.push([...csvHeading, Object.values(obj)]));
-				setCsvData(csvDataArr);
+			if (res.data?.length > 0) {
+				let allPoisData = csvDataTransform(res?.data);
+				setCsvData(allPoisData);
 			}
 		});
 	};
@@ -115,8 +120,9 @@ export const POIs = () => {
 			let params = '?';
 			if (selectedUser?.value) params += `createdBy.equals=${selectedUser.value}&`;
 			if (selectedWard?.value) params += `eseWardId.equals=${selectedWard.value}&`;
-			if (startDate)
-				params += `createdDate.equals=${startDate.toISOString().split('T')[0]}T11:20:47.357Z&`; // let the time be constant here
+			if (startDate) {
+				params += `createdDate.equals=${dateConvertor(startDate)}T11:20:47.357Z&`; // let the time be constant here
+			}
 			params += `page=${page}&size=${countPerPage}&sort=${sort}`;
 			resolve(params);
 		});

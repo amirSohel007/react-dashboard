@@ -140,3 +140,23 @@ export const basicsColumn = [
 		sortable: true,
 	},
 ];
+
+export const dateConvertor = (date) => {
+	var d = new Date(date),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear();
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	return [year, month, day].join('-');
+};
+
+export const csvDataTransform = (data) => {
+	const csvHeading = Object.keys(data[0]);
+	let csvDataArr = [];
+	csvDataArr.push(csvHeading);
+	data.map((obj) => csvDataArr.push([Object.values(obj)]));
+	return csvDataArr;
+};

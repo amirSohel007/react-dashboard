@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Col } from 'react-bootstrap';
+
 //CSV  import
 import { CSVLink } from 'react-csv';
-import DataTable, { defaultThemes } from 'react-data-table-component';
+import { customStyles, basicsColumn } from '../Pages-util/POIs-util';
+import DataTable from 'react-data-table-component';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 import { axios_auth } from '../../api';
 
+// BASE ENDPOINT URL FOR ALL DIFFERENT REQUEST
 const PoiBaseURL = '/services/services/api';
 
 const poiApiUrl = `${PoiBaseURL}/ese-pois`;
@@ -19,122 +22,10 @@ const actionClicked = (e) => {
 	console.log(e);
 };
 
+// BASIC TABLE COLUMN
 const columns = [
+	...basicsColumn,
 	{
-		name: 'ID',
-		selector: 'id',
-		width: '80px',
-		sortable: true,
-	},
-	{
-		name: 'Holding Number',
-		selector: 'holdingNo',
-		width: '200px',
-		sortable: true,
-	},
-	{
-		name: 'Plot No',
-		selector: 'plotNo',
-		width: '180px',
-		sortable: true,
-	},
-	{
-		name: 'Ward',
-		selector: 'eseWardWardDesc',
-		sortable: true,
-	},
-	{
-		name: 'Guardian Name',
-		selector: 'guardianName',
-		sortable: true,
-		width: '180px',
-	},
-	{
-		name: 'Address 1',
-		selector: 'address1',
-		sortable: true,
-	},
-	{
-		name: 'Address 2',
-		selector: 'address2',
-		sortable: true,
-	},
-	{
-		name: 'Address 3',
-		selector: 'address3',
-		sortable: true,
-	},
-	{
-		name: 'Mobile',
-		selector: 'mobileNo',
-		sortable: true,
-	},
-	{
-		name: 'Owner name',
-		selector: 'ownerName',
-		sortable: true,
-	},
-	{
-		name: 'Landmark',
-		selector: 'landMark',
-		sortable: true,
-	},
-	{
-		name: 'Latitude',
-		selector: 'latitude',
-		sortable: true,
-	},
-	{
-		name: 'Longitude',
-		selector: 'longitude',
-		sortable: true,
-	},
-	{
-		name: 'QR Code',
-		selector: 'qrCode',
-		sortable: true,
-	},
-	{
-		name: 'RFID Code',
-		selector: 'rfidCode',
-		sortable: true,
-	},
-	{
-		name: 'Additional details',
-		selector: 'additionalDetails',
-		sortable: true,
-	},
-	{
-		name: 'Email',
-		selector: 'email',
-		sortable: true,
-	},
-	{
-		name: 'Reason for follow up',
-		selector: 'reasonForFollowUp',
-		sortable: true,
-	},
-	{
-		name: 'Notes',
-		selector: 'notes',
-		sortable: true,
-	},
-	{
-		name: 'Pin code',
-		selector: 'esePinCodePinCode',
-		sortable: true,
-	},
-	{
-		name: 'POI Type',
-		selector: 'esePoiTypePoiTypeName',
-		sortable: true,
-	},
-	{
-		name: 'Property usage type',
-		selector: 'esePoiPropertyUsageTypePropertyUsageTypeName',
-		sortable: true,
-	},
-	{ 
 		name: 'Actions',
 		cell: (row, index, column, id) => {
 			return (
@@ -177,7 +68,7 @@ export const POIs = () => {
 		});
 	};
 
-	// Fetach all users for dropdown
+	// NETWORK CALL TO GET ALL DROPDOWN USERS
 	const getUsers = async () => {
 		const res = await axios_auth.get(userApiUrl);
 		if (res.data) {
@@ -187,7 +78,7 @@ export const POIs = () => {
 		}
 	};
 
-	// transform data for exporting in CSV file
+	// DOWNLOAD CSV  FILE
 	const downloadCSV = () => {
 		axios_auth.get(`${poiApiUrl}?size=914`).then((res) => {
 			if (res.data?.length > 1) {
@@ -199,7 +90,7 @@ export const POIs = () => {
 		});
 	};
 
-	// Fetch all wards number for dropdown
+	// NETWORK CALL FOR GET ALL WARDS FOR DROPDOWN
 	const getWards = async () => {
 		const res = await axios_auth.get(wardsApiUrl);
 		if (res.data) {
@@ -209,6 +100,7 @@ export const POIs = () => {
 		}
 	};
 
+	// 	GET ALL COUNT
 	const fetchPoiTotalCount = async (queryParams) => {
 		return new Promise((resolve, reject) => {
 			axios_auth.get(poiApiUrl + `/count` + queryParams).then((res) => {
@@ -217,15 +109,28 @@ export const POIs = () => {
 		});
 	};
 
+	// 	HELPER FUNCTION FOR CREATE QUERY PARMAS
 	const createQueryParams = async () => {
 		return new Promise((resolve, reject) => {
 			let params = '?';
-			if (selectedUser && selectedUser.value) params += `createdBy.equals=${selectedUser.value}&`;
-			if (selectedWard && selectedWard.value) params += `eseWardId.equals=${selectedWard.value}&`;
+			if (selectedUser?.value) params += `createdBy.equals=${selectedUser.value}&`;
+			if (selectedWard?.value) params += `eseWardId.equals=${selectedWard.value}&`;
 			params += `page=${page}&size=${countPerPage}&sort=${sort}`;
 			resolve(params);
 		});
 	};
+
+	// ON SORT
+	const onSort = (column, sortDirection, event) => {
+		setSort(column.selector + ',' + sortDirection);
+	};
+
+	// INITIAL MOUNT GET ALL DATA (THIS HOOK TRIGGERD ONLY ONCE)
+	useEffect(() => {
+		getUsers();
+		getWards();
+		downloadCSV();
+	}, []);
 
 	useEffect(() => {
 		fetchPoiData();
@@ -235,51 +140,16 @@ export const POIs = () => {
 		console.log(startDate);
 	}, [startDate]);
 
+	// re fetching data whenever page or sort changes
 	useEffect(() => {
-		getUsers();
-		getWards();
-		downloadCSV();
-	}, []);
+		fetchPoiData();
+	}, [page, sort]);
 
 	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
 	useEffect(() => {
 		setPage(defaultPage);
 		setResetPaginationToggle(!resetPaginationToggle); // reseting pagination current page to 1
 	}, [selectedWard, selectedUser]);
-
-	// re fetching data whenever page or sort changes
-	useEffect(() => {
-		fetchPoiData();
-	}, [page, sort]);
-
-	const onSort = (column, sortDirection, event) => {
-		setSort(column.selector + ',' + sortDirection);
-	};
-
-	const customStyles = {
-		header: {
-			style: {
-				minHeight: '56px',
-			},
-		},
-		headRow: {
-			style: {
-				borderTopStyle: 'solid',
-				borderTopWidth: '1px',
-				borderTopColor: defaultThemes.default.divider.default,
-			},
-		},
-		headCells: {
-			style: {
-				'&:not(:last-of-type)': {
-					borderRightStyle: 'solid',
-					borderRightWidth: '1px',
-					borderRightColor: defaultThemes.default.divider.default,
-					fontSize: 13,
-				},
-			},
-		},
-	};
 
 	return (
 		<div className='d-flex flex-column' style={{ height: 'calc(100vh - 185px)' }}>
@@ -294,7 +164,7 @@ export const POIs = () => {
 							classNamePrefix='react-select'
 							name='selectedUser'
 							value={selectedUser}
-							isClearable={true}
+							isClearable
 							onChange={(value) => setSelectedUser(value)}
 							options={users}
 							placeholder='Single Select'
@@ -311,7 +181,7 @@ export const POIs = () => {
 							className='react-select primary flex-fill'
 							classNamePrefix='react-select'
 							name='wards'
-							isClearable={true}
+							isClearable
 							value={selectedWard}
 							onChange={(value) => setSelectedWard(value)}
 							options={wards}
@@ -344,15 +214,15 @@ export const POIs = () => {
 			</div>
 
 			<DataTable
-				columns={columns}
-				data={pois}
-				striped={true}
-				dense={false}
-				highlightOnHover
-				fixedHeader={true}
-				customStyles={customStyles}
+				striped
+				dense
 				pagination
 				paginationServer
+				highlightOnHover
+				fixedHeader
+				columns={columns}
+				data={pois}
+				customStyles={customStyles}
 				progressPending={isLoading}
 				paginationTotalRows={totalCount - 1}
 				paginationResetDefaultPage={resetPaginationToggle}

@@ -13,59 +13,58 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
  */
+//  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
+@import 'lbd/variables';
+@import 'lbd/mixins';
+@import 'lbd/modals';
 
-@import "lbd/variables";
-@import "lbd/mixins";
-@import "lbd/modals";
-
-@import "lbd/typography";
+@import 'lbd/typography';
 
 // Core CSS
-@import "lbd/misc";
-@import "lbd/sidebar-and-main-panel";
-@import "lbd/fixed-plugin";
-@import "lbd/modal";
+@import 'lbd/misc';
+@import 'lbd/sidebar-and-main-panel';
+@import 'lbd/fixed-plugin';
+@import 'lbd/modal';
 
-@import "lbd/buttons";
-@import "lbd/social-buttons";
-@import "lbd/inputs";
+@import 'lbd/buttons';
+@import 'lbd/social-buttons';
+@import 'lbd/inputs';
 
-@import "lbd/alerts";
-@import "lbd/tables";
+@import 'lbd/alerts';
+@import 'lbd/tables';
 
-@import "lbd/checkbox-radio-switch";
-@import "lbd/navbars";
-@import "lbd/footers";
-@import "lbd/tags";
-@import "lbd/tabs-navs-pagination";
-@import "lbd/progress-bars";
-@import "lbd/sliders";
-
-
+@import 'lbd/checkbox-radio-switch';
+@import 'lbd/navbars';
+@import 'lbd/footers';
+@import 'lbd/tags';
+@import 'lbd/tabs-navs-pagination';
+@import 'lbd/progress-bars';
+@import 'lbd/sliders';
 
 // Fancy Stuff
-@import "lbd/dropdown";
-@import "lbd/cards";
-@import "lbd/chartist";
-@import "lbd/responsive";
-@import "lbd/bootstrap-switch";
+@import 'lbd/dropdown';
+@import 'lbd/cards';
+@import 'lbd/chartist';
+@import 'lbd/responsive';
+@import 'lbd/bootstrap-switch';
 
 // Nucleo Icons
-@import "lbd/partial-nucleo-icons";
+@import 'lbd/partial-nucleo-icons';
 
 //plugins css
-@import "lbd/plugins/animate";
-@import "lbd/plugins/sweetalert2";
+@import 'lbd/plugins/animate';
+@import 'lbd/plugins/sweetalert2';
 
-@import "lbd/plugins/jquery.jvectormap";
-@import "lbd/plugins/bootstrap-table";
-@import "lbd/plugins/datatables.net";
-@import "lbd/plugins/fullcalendar";
-@import "lbd/plugins/chartist";
-@import "lbd/plugins/perfect-scrollbar";
-@import "lbd/plugins/bootstrap-select";
-@import "lbd/plugins/datetime-picker";
-@import "lbd/plugins/nouislider";
+@import 'lbd/plugins/jquery.jvectormap';
+@import 'lbd/plugins/bootstrap-table';
+@import 'lbd/plugins/datatables.net';
+@import 'lbd/plugins/fullcalendar';
+@import 'lbd/plugins/chartist';
+@import 'lbd/plugins/perfect-scrollbar';
+@import 'lbd/plugins/bootstrap-select';
+@import 'lbd/plugins/datetime-picker';
+@import 'lbd/plugins/nouislider';
 
 // React Differences
-@import "lbdpr/react-differences";
+@import 'lbdpr/react-differences';

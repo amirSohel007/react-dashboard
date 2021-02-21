@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // react-bootstrap components
@@ -61,8 +61,7 @@ function Sidebar({ routes, image, background, username }) {
 					<Nav.Item
 						className={getCollapseInitialState(prop.views) ? 'active' : ''}
 						as='li'
-						key={key}
-					>
+						key={key}>
 						<Nav.Link
 							className={state[prop.state] ? 'collapsed' : ''}
 							data-toggle='collapse'
@@ -70,8 +69,7 @@ function Sidebar({ routes, image, background, username }) {
 								e.preventDefault();
 								setState({ ...state, ...st });
 							}}
-							aria-expanded={state[prop.state]}
-						>
+							aria-expanded={state[prop.state]}>
 							<i className={prop.icon}></i>
 							<p>
 								{prop.name} <b className='caret'></b>
@@ -86,11 +84,7 @@ function Sidebar({ routes, image, background, username }) {
 				);
 			}
 			return (
-				<Nav.Item
-					className={activeRoute(prop.layout + prop.path)}
-					key={key}
-					as='li'
-				>
+				<Nav.Item className={activeRoute(prop.layout + prop.path)} key={key} as='li'>
 					<Nav.Link to={prop.layout + prop.path} as={Link}>
 						{prop.icon ? (
 							<>
@@ -114,27 +108,17 @@ function Sidebar({ routes, image, background, username }) {
 	};
 	return (
 		<>
-			<div
-				className='sidebar'
-				data-color={'orange' || background}
-				data-image={image}
-			>
+			<div className='sidebar' data-image={image}>
 				<div className='sidebar-wrapper'>
 					<div className='logo pl-3'>
-						<a
-							className='simple-text logo-normal'
-							href='http://www.creative-tim.com'
-						>
+						<NavLink className='simple-text logo-normal' to='/admin/home'>
 							{' '}
 							Ecosense Enviro
-						</a>
+						</NavLink>
 					</div>
 					<div className='user'>
 						<div className='photo'>
-							<img
-								alt='...'
-								src={require('assets/img/default-avatar.png').default}
-							></img>
+							<img alt='...' src={require('assets/img/default-avatar.png').default}></img>
 						</div>
 						<div className='info'>
 							<a
@@ -145,8 +129,7 @@ function Sidebar({ routes, image, background, username }) {
 									e.preventDefault();
 									setUserCollapseState(!userCollapseState);
 								}}
-								aria-expanded={userCollapseState}
-							>
+								aria-expanded={userCollapseState}>
 								<span>
 									{username} <b className='caret'></b>
 								</span>
@@ -158,8 +141,7 @@ function Sidebar({ routes, image, background, username }) {
 											<a
 												className='profile-dropdown'
 												href='#pablo'
-												onClick={(e) => e.preventDefault()}
-											>
+												onClick={(e) => e.preventDefault()}>
 												<span className='sidebar-mini'>MP</span>
 												<span className='sidebar-normal'>My Profile</span>
 											</a>
@@ -168,8 +150,7 @@ function Sidebar({ routes, image, background, username }) {
 											<a
 												className='profile-dropdown'
 												href='#pablo'
-												onClick={(e) => e.preventDefault()}
-											>
+												onClick={(e) => e.preventDefault()}>
 												<span className='sidebar-mini'>EP</span>
 												<span className='sidebar-normal'>Edit Profile</span>
 											</a>
@@ -178,8 +159,7 @@ function Sidebar({ routes, image, background, username }) {
 											<a
 												className='profile-dropdown'
 												href='#pablo'
-												onClick={(e) => e.preventDefault()}
-											>
+												onClick={(e) => e.preventDefault()}>
 												<span className='sidebar-mini'>S</span>
 												<span className='sidebar-normal'>Settings</span>
 											</a>
@@ -217,14 +197,7 @@ Sidebar.defaultProps = {
 
 Sidebar.propTypes = {
 	image: PropTypes.string,
-	background: PropTypes.oneOf([
-		'black',
-		'azure',
-		'green',
-		'orange',
-		'red',
-		'purple',
-	]),
+	background: PropTypes.oneOf(['black', 'azure', 'green', 'orange', 'red', 'purple']),
 	routes: PropTypes.arrayOf(
 		PropTypes.oneOfType([
 			PropTypes.shape({
@@ -242,7 +215,7 @@ Sidebar.propTypes = {
 					mini: PropTypes.string,
 				}),
 			}),
-		])
+		]),
 	),
 };
 

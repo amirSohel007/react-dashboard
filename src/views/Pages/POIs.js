@@ -40,18 +40,18 @@ const columns = [
 ];
 
 export const POIs = () => {
+	const defaultPage = 0;
 	const [pois, setPoisData] = useState({});
-	const [page, setPage] = useState(1);
+	const [page, setPage] = useState(defaultPage);
 	const [sort, setSort] = useState('id,asc');
 	const [totalCount, setTotalCount] = useState(0);
 	const [selectedUser, setSelectedUser] = React.useState(null);
 	const [selectedWard, setSelectedWard] = React.useState(null);
 	const [users, setUsers] = useState([]);
 	const [wards, setWards] = useState([]);
-	const [startDate, setStartDate] = useState();
+	const [startDate, setStartDate] = useState(null);
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 	const [isLoading, setLoading] = useState(false);
-	const defaultPage = 1;
 	const [csv, setCsvData] = useState([]);
 	const countPerPage = 40;
 
@@ -115,6 +115,8 @@ export const POIs = () => {
 			let params = '?';
 			if (selectedUser?.value) params += `createdBy.equals=${selectedUser.value}&`;
 			if (selectedWard?.value) params += `eseWardId.equals=${selectedWard.value}&`;
+			if (startDate)
+				params += `createdDate.equals=${startDate.toISOString().split('T')[0]}T11:20:47.357Z&`; // let the time be constant here
 			params += `page=${page}&size=${countPerPage}&sort=${sort}`;
 			resolve(params);
 		});
@@ -136,14 +138,10 @@ export const POIs = () => {
 		fetchPoiData();
 	}, [resetPaginationToggle]);
 
-	useEffect(() => {
-		console.log(startDate);
-	}, [startDate]);
-
-	// re fetching data whenever page or sort changes
+	// re fetching data whenever page, sort or start date changes
 	useEffect(() => {
 		fetchPoiData();
-	}, [page, sort]);
+	}, [page, sort, startDate]);
 
 	// Used to re-call the POI API whenever user or ward is changed by creating query parameter
 	useEffect(() => {
@@ -224,13 +222,13 @@ export const POIs = () => {
 				data={pois}
 				customStyles={customStyles}
 				progressPending={isLoading}
-				paginationTotalRows={totalCount - 1}
+				paginationTotalRows={totalCount}
 				paginationResetDefaultPage={resetPaginationToggle}
 				paginationPerPage={countPerPage}
 				paginationComponentOptions={{
 					noRowsPerPage: true,
 				}}
-				onChangePage={(page) => setPage(page)}
+				onChangePage={(page) => setPage(page - 1)}
 				onSort={onSort}
 			/>
 		</div>

@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap';
 
 //CSV  import
 import { CSVLink } from 'react-csv';
-import { customStyles, basicsColumn } from '../Pages-util/POIs-util';
+import { customStyles, basicsColumn, dateConvertor } from '../Pages-util/POIs-util';
 import DataTable from 'react-data-table-component';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
@@ -115,8 +115,9 @@ export const POIs = () => {
 			let params = '?';
 			if (selectedUser?.value) params += `createdBy.equals=${selectedUser.value}&`;
 			if (selectedWard?.value) params += `eseWardId.equals=${selectedWard.value}&`;
-			if (startDate)
-				params += `createdDate.equals=${startDate.toISOString().split('T')[0]}T11:20:47.357Z&`; // let the time be constant here
+			if (startDate) {
+				params += `createdDate.equals=${dateConvertor(startDate)}T11:20:47.357Z&`; // let the time be constant here
+			}
 			params += `page=${page}&size=${countPerPage}&sort=${sort}`;
 			resolve(params);
 		});

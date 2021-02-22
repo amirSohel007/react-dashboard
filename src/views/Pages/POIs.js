@@ -53,6 +53,7 @@ export const POIs = () => {
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 	const [isLoading, setLoading] = useState(false);
 	const [csv, setCsvData] = useState([]);
+	const [initialCSVLoad, setInitialCSVLoad] = useState(false);
 	const countPerPage = 40;
 
 	//Fetch pois count and data with respective filters and pagination
@@ -63,7 +64,10 @@ export const POIs = () => {
 			setTotalCount(count);
 			axios_auth.get(poiApiUrl + queryParams).then((res) => {
 				setPoisData(res.data);
-				setCsvData(res.data);
+				if (initialCSVLoad) {
+					debugger;
+					setCsvData(res?.data);
+				}
 				setLoading(false);
 			});
 		});
@@ -83,6 +87,8 @@ export const POIs = () => {
 	const downloadCSV = () => {
 		axios_auth.get(`${poiApiUrl}?size=914`).then((res) => {
 			if (res.data?.length > 0) {
+				// WE ARE MAKING THIS FLAG TRUE ON INITIAL LEVEL
+				setInitialCSVLoad(true);
 				setCsvData(res.data);
 			}
 		});

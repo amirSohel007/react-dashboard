@@ -153,10 +153,10 @@ export const dateConvertor = (date) => {
 	return [year, month, day].join('-');
 };
 
-export const csvDataTransform = (data) => {
-	const csvHeading = Object.keys(data[0]);
-	let csvDataArr = [];
-	csvDataArr.push(csvHeading);
-	data.map((obj) => csvDataArr.push([Object.values(obj)]));
-	return csvDataArr;
-};
+// export const csvDataTransform = (data) => {
+// 	const csvHeading = Object.keys(data[0]);
+// 	let csvDataArr = [];
+// 	csvDataArr.push(csvHeading);
+// 	data.map((obj) => csvDataArr.push([Object.values(obj)]));
+// 	return csvDataArr;
+// };

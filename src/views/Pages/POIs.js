@@ -3,12 +3,7 @@ import { Col } from 'react-bootstrap';
 
 //CSV  import
 import { CSVLink } from 'react-csv';
-import {
-	customStyles,
-	basicsColumn,
-	dateConvertor,
-	csvDataTransform,
-} from '../Pages-util/POIs-util';
+import { customStyles, basicsColumn, dateConvertor } from '../Pages-util/POIs-util';
 import DataTable from 'react-data-table-component';
 // react plugin used to create datetimepicker
 import DatePicker from 'react-datepicker';
@@ -58,6 +53,7 @@ export const POIs = () => {
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 	const [isLoading, setLoading] = useState(false);
 	const [csv, setCsvData] = useState([]);
+	const [initialCSVLoad, setInitialCSVLoad] = useState(false);
 	const countPerPage = 40;
 
 	//Fetch pois count and data with respective filters and pagination
@@ -68,8 +64,10 @@ export const POIs = () => {
 			setTotalCount(count);
 			axios_auth.get(poiApiUrl + queryParams).then((res) => {
 				setPoisData(res.data);
-				let filterdPoisData = csvDataTransform(res?.data);
-				setCsvData(filterdPoisData);
+				if (initialCSVLoad) {
+					debugger;
+					setCsvData(res?.data);
+				}
 				setLoading(false);
 			});
 		});
@@ -89,8 +87,9 @@ export const POIs = () => {
 	const downloadCSV = () => {
 		axios_auth.get(`${poiApiUrl}?size=914`).then((res) => {
 			if (res.data?.length > 0) {
-				let allPoisData = csvDataTransform(res?.data);
-				setCsvData(allPoisData);
+				// WE ARE MAKING THIS FLAG TRUE ON INITIAL LEVEL
+				setInitialCSVLoad(true);
+				setCsvData(res.data);
 			}
 		});
 	};
